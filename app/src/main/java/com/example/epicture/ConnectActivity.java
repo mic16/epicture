@@ -2,6 +2,7 @@ package com.example.epicture;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebResourceRequest;
@@ -20,6 +21,7 @@ public class ConnectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_connect);
         Log.i(ApiData.TAG, "Opening to OAuth2 login");
 
+        Intent intent = new Intent(this, User.class);
         final FrameLayout root = new FrameLayout(this);
         final WebView webView = new WebView(this);
         final String oauthUrl = "https://api.imgur.com/oauth2/authorize?client_id=" + ApiData.CLIENT_ID + "&response_type=token";
@@ -41,9 +43,11 @@ public class ConnectActivity extends AppCompatActivity {
                             .of(ApiData.CLIENT_ID)
                             .setOAuth(oauth)
                             .build();
+                    startActivity(intent);
                     finish();
                 } catch (Exception e) {
                     Log.i(ApiData.TAG, e.getMessage());
+                    startActivity(intent);
                     finish();
                     return false;
                 }
