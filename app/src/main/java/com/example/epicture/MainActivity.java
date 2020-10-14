@@ -12,6 +12,7 @@ import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import net.azzerial.jmgur.api.Jmgur;
@@ -47,5 +48,10 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void button5Handle(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 }
