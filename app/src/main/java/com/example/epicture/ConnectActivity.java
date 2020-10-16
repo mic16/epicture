@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
@@ -26,6 +27,9 @@ public class ConnectActivity extends AppCompatActivity {
         final WebView webView = new WebView(this);
         final String oauthUrl = "https://api.imgur.com/oauth2/authorize?client_id=" + ApiData.CLIENT_ID + "&response_type=token";
 
+        webView.getSettings().setJavaScriptEnabled(true);
+        WebSettings settings = webView.getSettings();
+        settings.setDomStorageEnabled(true);
         root.addView(webView);
         setContentView(root);
 
@@ -33,7 +37,6 @@ public class ConnectActivity extends AppCompatActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 final String url = request.getUrl().toString();
-
                 Log.i(ApiData.TAG, "Redirected WebView on: " + url);
 
                 try {
