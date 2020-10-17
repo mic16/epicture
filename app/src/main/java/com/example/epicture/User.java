@@ -1,23 +1,17 @@
 package com.example.epicture;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -25,10 +19,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
-import net.azzerial.jmgur.api.entities.dto.ImageUploadDTO;
-
-import java.io.ByteArrayOutputStream;
-import java.util.Base64;
+import java.net.URL;
 
 public class User extends AppCompatActivity {
 
@@ -48,6 +39,22 @@ public class User extends AppCompatActivity {
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View hView =  navigationView.getHeaderView(0);
+        TextView userNameView = (TextView)hView.findViewById(R.id.userProfilName);
+        TextView userPTSView = (TextView)hView.findViewById(R.id.userProfilPTS);
+        ImageView userPictureView  = (ImageView)hView.findViewById(R.id.userProfilPicture);
+        ApiData.api.ACCOUNT.getSelfAccount().queue(account -> {
+            Bitmap img = getBitmapImageFromUrl(account.getAvatar().getUrl());
+            if (img != null){
+                userPictureView.setImageBitmap(img);
+            }
+            userNameView.setText(account.getName());
+            userPTSView.setText("PTS : " + account.getReputationScore());
+        });
+        ApiData.api.ACCOUNT.getSelfAccount().queue(account -> {
+            userNameView.setText(account.getName());
+            userPTSView.setText("PTS : " + account.getReputationScore());
+        });
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -56,6 +63,16 @@ public class User extends AppCompatActivity {
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    private Bitmap getBitmapImageFromUrl(String url) {
+        try {
+            URL imgUrl = new URL(url);
+            Bitmap bmp = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
+            return bmp;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
