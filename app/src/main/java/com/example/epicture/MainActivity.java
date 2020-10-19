@@ -18,5 +18,7 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(this, ConnectActivity.class);
         startActivity(intent);
+        Intent intent2 = new Intent(this, User.class);
+        startActivity(intent2);
     }
 }
