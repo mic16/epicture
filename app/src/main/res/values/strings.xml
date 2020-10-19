@@ -17,4 +17,6 @@
     <string name="img">Img</string>
     <string name="description">Description</string>
     <string name="send">Send</string>
+    <string name="you_need_anything">You need anything ?</string>
+    <string name="search">Search</string>
 </resources>
