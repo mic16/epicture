@@ -1,5 +1,7 @@
 package com.example.epicture.ui.slideshow;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +13,21 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.epicture.ApiData;
 import com.example.epicture.R;
 
+import net.azzerial.jmgur.api.entities.GalleryElement;
+import net.azzerial.jmgur.api.requests.restaction.PagedRestAction;
+
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SlideshowFragment extends Fragment {
 
-    private List<Movie> movieList = new ArrayList<>();
+    private List<Image> imageList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private MoviesAdapter mAdapter;
+    private ImageAdapter mAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -28,65 +35,38 @@ public class SlideshowFragment extends Fragment {
         recyclerView = (RecyclerView) root.findViewById(R.id.my_recycler_view);
 
 
-        mAdapter = new MoviesAdapter(movieList);
+        mAdapter = new ImageAdapter(imageList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        prepareMovieData();
+        test();
         return root;
     }
 
-    private void prepareMovieData() {
-        Movie movie = new Movie("Mad Max: Fury Road", "Action & Adventure", "2015");
-        movieList.add(movie);
-
-        movie = new Movie("Inside Out", "Animation, Kids & Family", "2015");
-        movieList.add(movie);
-
-        movie = new Movie("Star Wars: Episode VII - The Force Awakens", "Action", "2015");
-        movieList.add(movie);
-
-        movie = new Movie("Shaun the Sheep", "Animation", "2015");
-        movieList.add(movie);
-
-        movie = new Movie("The Martian", "Science Fiction & Fantasy", "2015");
-        movieList.add(movie);
-
-        movie = new Movie("Mission: Impossible Rogue Nation", "Action", "2015");
-        movieList.add(movie);
-
-        movie = new Movie("Up", "Animation", "2009");
-        movieList.add(movie);
-
-        movie = new Movie("Star Trek", "Science Fiction", "2009");
-        movieList.add(movie);
-
-        movie = new Movie("The LEGO Movie", "Animation", "2014");
-        movieList.add(movie);
-
-        movie = new Movie("Iron Man", "Action & Adventure", "2008");
-        movieList.add(movie);
-
-        movie = new Movie("Aliens", "Science Fiction", "1986");
-        movieList.add(movie);
-
-        movie = new Movie("Chicken Run", "Animation", "2000");
-        movieList.add(movie);
-
-        movie = new Movie("Back to the Future", "Science Fiction", "1985");
-        movieList.add(movie);
-
-        movie = new Movie("Raiders of the Lost Ark", "Action & Adventure", "1981");
-        movieList.add(movie);
-
-        movie = new Movie("Goldfinger", "Action & Adventure", "1965");
-        movieList.add(movie);
-
-        movie = new Movie("Guardians of the Galaxy", "Science Fiction & Fantasy", "2014");
-        movieList.add(movie);
+    private void test() {
+        PagedRestAction<List<GalleryElement>> elem = ApiData.api.GALLERY.searchGallery("yolo");
+        elem.get(0).queue(img -> {
+            System.out.println( "--------------------> "+ img.get(0).getHash());
+            System.out.println( "--------------------> " + img.get(0).getUrl());
+            Bitmap bit = getBitmapImageFromUrl(img.get(0).getUrl());
+            Image image = new Image(bit, "Action & Adventure", "2015");
+            imageList.add(image);
+        });
+        //Image image = new Image("Mad Max: Fury Road", "Action & Adventure", "2015");
+        //imageList.add(image);
 
         mAdapter.notifyDataSetChanged();
+    }
+
+    private Bitmap getBitmapImageFromUrl(String url) {
+        try {
+            URL imgUrl = new URL(url);
+            Bitmap bmp = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
+            return bmp;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

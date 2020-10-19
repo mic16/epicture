@@ -1,23 +1,27 @@
 package com.example.epicture.ui.slideshow;
 
-public class Movie {
-    private String title, genre, year;
+import android.graphics.Bitmap;
+import android.widget.ImageView;
 
-    public Movie() {
+public class Image {
+    private String genre, year;
+    private Bitmap image;
+
+    public Image() {
     }
 
-    public Movie(String title, String genre, String year) {
-        this.title = title;
+    public Image(Bitmap image, String genre, String year) {
+        this.image = image;
         this.genre = genre;
         this.year = year;
     }
 
-    public String getTitle() {
-        return title;
+    public Bitmap getImage() {
+        return image;
     }
 
-    public void setTitle(String name) {
-        this.title = name;
+    public void setImage(Bitmap img) {
+        this.image = img;
     }
 
     public String getYear() {

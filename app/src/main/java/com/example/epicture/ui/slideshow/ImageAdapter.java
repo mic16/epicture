@@ -3,6 +3,7 @@ package com.example.epicture.ui.slideshow;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,24 +12,25 @@ import com.example.epicture.R;
 
 import java.util.List;
 
-public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder> {
+public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder> {
 
-    private List<Movie> moviesList;
+    private List<Image> imageList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, year, genre;
+        public TextView year, genre;
+        public ImageView image;
 
         public MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.titleScroll);
+            image = (ImageView) view.findViewById(R.id.imageViewScroll);
             genre = (TextView) view.findViewById(R.id.genreScroll);
             year = (TextView) view.findViewById(R.id.yearScroll);
         }
     }
 
 
-    public MoviesAdapter(List<Movie> moviesList) {
-        this.moviesList = moviesList;
+    public ImageAdapter(List<Image> moviesList) {
+        this.imageList = moviesList;
     }
 
     @Override
@@ -41,14 +43,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Movie movie = moviesList.get(position);
-        holder.title.setText(movie.getTitle());
-        holder.genre.setText(movie.getGenre());
-        holder.year.setText(movie.getYear());
+        Image image = imageList.get(position);
+        holder.image.setImageBitmap(image.getImage());
+        holder.genre.setText(image.getGenre());
+        holder.year.setText(image.getYear());
     }
 
     @Override
     public int getItemCount() {
-        return moviesList.size();
+        return imageList.size();
     }
 }

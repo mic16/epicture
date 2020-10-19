@@ -11,20 +11,17 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/row_padding_vertical">
 
-    <TextView
-        android:id="@+id/titleScroll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:textColor="@color/title"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/imageViewScroll"
+        android:layout_width="299dp"
+        android:layout_height="221dp"
+        android:contentDescription="@string/img"/>
 
     <TextView
         android:id="@+id/genreScroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/titleScroll" />
+        android:layout_below="@id/imageViewScroll" />
 
     <TextView
         android:id="@+id/yearScroll"
