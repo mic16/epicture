@@ -55,8 +55,6 @@ public class User extends AppCompatActivity {
             userNameView.setText(account.getName());
             userPTSView.setText("PTS : " + account.getReputationScore());
         });
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
                 .setDrawerLayout(drawer)

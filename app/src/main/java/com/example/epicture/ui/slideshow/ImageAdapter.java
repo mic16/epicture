@@ -44,17 +44,22 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Image image = imageList.get(position);
-        Glide
-                .with(holder.itemView.getContext())
-                .load(image.getImage())
-                .into( holder.image);
-        holder.genre.setText(image.getGenre());
-        holder.year.setText(image.getYear());
+        if (position >= imageList.size()) {
+            Glide
+                    .with(holder.itemView.getContext())
+                    .load(R.drawable.ic_baseline_refresh_24)
+                    .into(holder.image);
+        } else {
+            Image image = imageList.get(position);
+            Glide
+                    .with(holder.itemView.getContext())
+                    .load(image.getImage())
+                    .into(holder.image);
+            holder.genre.setText(image.getGenre());
+            holder.year.setText(image.getYear());
+        }
     }
 
     @Override
-    public int getItemCount() {
-        return imageList.size();
-    }
+    public int getItemCount() { return (Math.max(imageList.size(), 50)); }
 }

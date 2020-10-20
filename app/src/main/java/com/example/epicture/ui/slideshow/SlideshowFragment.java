@@ -58,7 +58,6 @@ public class SlideshowFragment extends Fragment {
             public void onClick(View view) {
                 imageList.clear();
                 searchMedia();
-                mAdapter.notifyDataSetChanged();
             }
         });
         return root;
@@ -66,30 +65,33 @@ public class SlideshowFragment extends Fragment {
 
     private void searchMedia() {
         String query = mediaSearchInput.getEditText().getText().toString();
-        PagedRestAction<List<GalleryElement>> elem = ApiData.api.GALLERY.searchGallery(query);
-        elem.get(0).queue(img -> {
-            try {
-                for (int k = 0; k < img.size(); k++) {
-                    if (img.get(k) instanceof GalleryAlbum) {
-                        GalleryAlbum gAlbum = (GalleryAlbum) img.get(k);
-                        List<GalleryImage> gImage = gAlbum.getImages();
-                        for (int i = 0; i < gImage.size(); i++) {
-                            GalleryImage image = gImage.get(i);
-                            Image j = new Image(image.getUrl(), image.getTitle(), Integer.toString(image.getScore()));
-                            imageList.add(j);
+        CompletableFuture.runAsync(() -> {
+            ApiData.api.GALLERY.searchGallery(query).get().submit().thenAcceptAsync(
+                    img -> {
+                        for (int k = 0; k < img.size(); k++) {
+                            if (img.get(k) instanceof GalleryAlbum) {
+                                GalleryAlbum gAlbum = (GalleryAlbum) img.get(k);
+                                List<GalleryImage> gImage = gAlbum.getImages();
+                                for (int i = 0; i < gImage.size(); i++) {
+                                    GalleryImage image = gImage.get(i);
+                                    Image j = new Image(image.getUrl(), image.getTitle(), Integer.toString(image.getScore()));
+                                    imageList.add(j);
+                                }
+                            } else if (img.get(k) instanceof GalleryImage) {
+                                GalleryImage gImage = (GalleryImage) img.get(k);
+                                GalleryImage image = gImage;
+                                System.out.println(image.getTitle());
+                                Image j = new Image(image.getUrl(), image.getTitle(), Integer.toString(image.getScore()));
+                                imageList.add(j);
+                            }
                         }
-                    } else if (img.get(k) instanceof GalleryImage) {
-                        GalleryImage gImage = (GalleryImage) img.get(k);
-                        GalleryImage image = gImage;
-                        System.out.println(image.getTitle());
-                        Image j = new Image(image.getUrl(), image.getTitle(), Integer.toString(image.getScore()));
-                        imageList.add(j);
                     }
-                }
-            } catch (Exception e) {
+            ).exceptionally(e -> {
                 e.printStackTrace();
-            }
+                return null;
+            }).join();
+        }).thenRunAsync(() -> {
+            mAdapter.notifyDataSetChanged();
         });
-        mAdapter.notifyDataSetChanged();
     }
 }
