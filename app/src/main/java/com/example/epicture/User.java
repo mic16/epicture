@@ -88,4 +88,9 @@ public class User extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    public void userSettings(View view) {
+        Intent intent = new Intent(this, UserSettings.class);
+        startActivity(intent);
+    }
 }
