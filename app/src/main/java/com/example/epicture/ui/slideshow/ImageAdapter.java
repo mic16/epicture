@@ -24,8 +24,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
         public MyViewHolder(View view) {
             super(view);
             image = (ImageView) view.findViewById(R.id.imageViewScroll);
-            genre = (TextView) view.findViewById(R.id.genreScroll);
-            year = (TextView) view.findViewById(R.id.yearScroll);
+            genre = (TextView) view.findViewById(R.id.titleScroll);
+            year = (TextView) view.findViewById(R.id.upVoteScroll);
         }
     }
 
@@ -37,7 +37,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.movie_list_row, parent, false);
+                .inflate(R.layout.image_list_row, parent, false);
 
         return new MyViewHolder(itemView);
     }

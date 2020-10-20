@@ -20,6 +20,7 @@
     <string name="you_need_anything">You need anything ?</string>
     <string name="search">Search</string>
     <string name="con">con</string>
-    <string name="todo">TODO</string>
     <string name="favourites">Favourites</string>
+    <string name="viewdisign">viewDisign</string>
+    <string name="_0">0</string>
 </resources>

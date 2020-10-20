@@ -64,14 +64,14 @@ public class HomeFragment extends Fragment {
                                 List<GalleryImage> gImage = gAlbum.getImages();
                                 for (int i = 0; i < gImage.size(); i++) {
                                     GalleryImage image = gImage.get(i);
-                                    Image j = new Image(image.getUrl(), image.getTitle(), Integer.toString(image.getScore()));
+                                    Image j = new Image(image.getUrl(), image.getTitle(), Integer.toString(image.getScore()), image.getHash());
                                     imageList.add(j);
                                 }
                             } else if (img.get(k) instanceof GalleryImage) {
                                 GalleryImage gImage = (GalleryImage) img.get(k);
                                 GalleryImage image = gImage;
                                 System.out.println(image.getTitle());
-                                Image j = new Image(image.getUrl(), image.getTitle(), Integer.toString(image.getScore()));
+                                Image j = new Image(image.getUrl(), image.getTitle(), Integer.toString(image.getScore()), image.getHash());
                                 imageList.add(j);
                             }
                         }
