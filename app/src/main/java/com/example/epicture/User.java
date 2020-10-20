@@ -2,7 +2,6 @@ package com.example.epicture;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -18,8 +17,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.net.URL;
 
 public class User extends AppCompatActivity {
 
@@ -44,7 +41,7 @@ public class User extends AppCompatActivity {
         TextView userPTSView = (TextView)hView.findViewById(R.id.userProfilPTS);
         ImageView userPictureView  = (ImageView)hView.findViewById(R.id.userProfilPicture);
         ApiData.api.ACCOUNT.getSelfAccount().queue(account -> {
-            Bitmap img = getBitmapImageFromUrl(account.getAvatar().getUrl());
+            Bitmap img = Utils.getBitmapImageFromUrl(account.getAvatar().getUrl());
             if (img != null){
                 userPictureView.setImageBitmap(img);
             }
@@ -58,21 +55,11 @@ public class User extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_profile)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navigationView, navController);
-    }
-
-    private Bitmap getBitmapImageFromUrl(String url) {
-        try {
-            URL imgUrl = new URL(url);
-            Bitmap bmp = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
-            return bmp;
-        } catch (Exception e) {
-            return null;
-        }
     }
 
     @Override
@@ -87,5 +74,10 @@ public class User extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void userSettings(View view) {
+        //Intent intent = new Intent(this, UserProfile.class);
+        //startActivity(intent);
     }
 }

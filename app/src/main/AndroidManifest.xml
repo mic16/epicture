@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PostMedia"></activity>
+        <activity android:name=".PostMedia" />
         <activity
             android:name=".User"
             android:label="@string/title_activity_user"

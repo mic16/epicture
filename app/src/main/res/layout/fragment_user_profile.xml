@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".UserProfile">
 
     <TextView
         android:id="@+id/Favourites"
@@ -24,7 +24,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="13dp"
         android:scrollbars="none"
-        app:layout_constraintBottom_toTopOf="@+id/Popular"
+        app:layout_constraintBottom_toTopOf="@+id/UserPosts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Favourites">
@@ -37,7 +37,7 @@
     </HorizontalScrollView>
 
     <TextView
-        android:id="@+id/Popular"
+        android:id="@+id/UserPosts"
         android:layout_width="392dp"
         android:layout_height="34dp"
         android:textAlignment="center"

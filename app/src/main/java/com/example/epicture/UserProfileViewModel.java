@@ -1,26 +1,24 @@
-package com.example.epicture.ui.home;
+package com.example.epicture;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
-
+public class UserProfileViewModel extends ViewModel {
     final MutableLiveData<String> favourite;
-    final MutableLiveData<String> popular;
+    final MutableLiveData<String> userPosts;
 
-    public HomeViewModel() {
+    public UserProfileViewModel() {
         favourite = new MutableLiveData<>();
         favourite.setValue("Favourites");
-        popular = new MutableLiveData<>();
-        popular.setValue("Popular");
+        userPosts = new MutableLiveData<>();
+        userPosts.setValue("Your Posts");
     }
 
     public LiveData<String> getTextFavourite() {
         return favourite;
     }
     public LiveData<String> getTextPopular() {
-        return popular;
+        return userPosts;
     }
-
 }
