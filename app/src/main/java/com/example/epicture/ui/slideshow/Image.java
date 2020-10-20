@@ -5,23 +5,23 @@ import android.widget.ImageView;
 
 public class Image {
     private String genre, year;
-    private Bitmap image;
+    private String imageUrl;
 
     public Image() {
     }
 
-    public Image(Bitmap image, String genre, String year) {
-        this.image = image;
+    public Image(String image, String genre, String year) {
+        this.imageUrl = image;
         this.genre = genre;
         this.year = year;
     }
 
-    public Bitmap getImage() {
-        return image;
+    public String getImage() {
+        return imageUrl;
     }
 
-    public void setImage(Bitmap img) {
-        this.image = img;
+    public void setImage(String img) {
+        this.imageUrl = img;
     }
 
     public String getYear() {

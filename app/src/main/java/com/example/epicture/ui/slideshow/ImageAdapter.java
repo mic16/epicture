@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.epicture.R;
 
 import java.util.List;
@@ -44,7 +45,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Image image = imageList.get(position);
-        holder.image.setImageBitmap(image.getImage());
+        Glide
+                .with(holder.itemView.getContext())
+                .load(image.getImage())
+                .into( holder.image);
         holder.genre.setText(image.getGenre());
         holder.year.setText(image.getYear());
     }
