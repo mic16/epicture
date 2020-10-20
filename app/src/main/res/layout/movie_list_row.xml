@@ -19,15 +19,22 @@
 
     <TextView
         android:id="@+id/genreScroll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="380dp"
+        android:layout_height="48dp"
         android:layout_below="@id/imageViewScroll" />
 
     <TextView
         android:id="@+id/yearScroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_above="@+id/genreScroll"
+        android:layout_alignTop="@+id/imageViewScroll"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="103dp"
+        android:layout_marginEnd="53dp"
+        android:layout_marginBottom="99dp"
+        android:layout_toEndOf="@+id/imageViewScroll"
         android:textColor="@color/year" />
 
 </RelativeLayout>

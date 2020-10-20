@@ -12,6 +12,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,11 +24,13 @@ import com.google.android.material.textfield.TextInputLayout;
 import net.azzerial.jmgur.api.entities.GalleryAlbum;
 import net.azzerial.jmgur.api.entities.GalleryElement;
 import net.azzerial.jmgur.api.entities.GalleryImage;
+import net.azzerial.jmgur.api.entities.dto.GallerySearchDTO;
 import net.azzerial.jmgur.api.requests.restaction.PagedRestAction;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class SlideshowFragment extends Fragment {
 
@@ -43,7 +46,8 @@ public class SlideshowFragment extends Fragment {
 
         mAdapter = new ImageAdapter(imageList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
+
+        recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
@@ -54,6 +58,7 @@ public class SlideshowFragment extends Fragment {
             public void onClick(View view) {
                 imageList.clear();
                 searchMedia();
+                mAdapter.notifyDataSetChanged();
             }
         });
         return root;
@@ -76,6 +81,7 @@ public class SlideshowFragment extends Fragment {
                     } else if (img.get(k) instanceof GalleryImage) {
                         GalleryImage gImage = (GalleryImage) img.get(k);
                         GalleryImage image = gImage;
+                        System.out.println(image.getTitle());
                         Image j = new Image(image.getUrl(), image.getTitle(), Integer.toString(image.getScore()));
                         imageList.add(j);
                     }
@@ -85,15 +91,5 @@ public class SlideshowFragment extends Fragment {
             }
         });
         mAdapter.notifyDataSetChanged();
-    }
-
-    private Bitmap getBitmapImageFromUrl(String url) {
-        try {
-            URL imgUrl = new URL(url);
-            Bitmap bmp = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
-            return bmp;
-        } catch (Exception e) {
-            return null;
-        }
     }
 }
