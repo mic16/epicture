@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -39,28 +40,25 @@ public class User extends AppCompatActivity {
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        View hView =  navigationView.getHeaderView(0);
-        TextView userNameView = (TextView)hView.findViewById(R.id.userProfilName);
-        TextView userPTSView = (TextView)hView.findViewById(R.id.userProfilPTS);
-        ImageView userPictureView  = (ImageView)hView.findViewById(R.id.userProfilPicture);
-        ApiData.getApi().ACCOUNT.getSelfAccount().queue(account -> {
-            Bitmap img = getBitmapImageFromUrl(account.getAvatar().getUrl());
-            if (img != null){
-                userPictureView.setImageBitmap(img);
-            }
-            userNameView.setText(account.getName());
-            userPTSView.setText("PTS : " + account.getReputationScore());
-        });
-        ApiData.getApi().ACCOUNT.getSelfAccount().queue(account -> {
-            userNameView.setText(account.getName());
-            userPTSView.setText("PTS : " + account.getReputationScore());
-        });
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navigationView, navController);
+        loadProfil();
+    }
+
+    public void loadProfil() {
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        View hView =  navigationView.getHeaderView(0);
+        TextView userNameView = (TextView)hView.findViewById(R.id.userProfilName);
+        TextView userPTSView = (TextView)hView.findViewById(R.id.userProfilPTS);
+        ImageView userPictureView  = (ImageView)hView.findViewById(R.id.userProfilPicture);
+        ApiData.getApi().ACCOUNT.getSelfAccount().queue(account -> {
+            //userNameView.setText(account.getName());
+            //userPTSView.setText("PTS : " + account.getReputationScore());
+        });
     }
 
     private Bitmap getBitmapImageFromUrl(String url) {

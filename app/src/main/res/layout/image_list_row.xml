@@ -20,22 +20,23 @@
 
     <TextView
         android:id="@+id/viewScroll"
-        android:layout_width="36dp"
-        android:layout_height="35dp"
+        android:layout_width="78dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/imageViewScroll"
         android:layout_alignStart="@+id/imageViewScroll"
-        android:layout_marginStart="0dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="0dp"
         android:background="#E91E63"
-        android:text="@string/_0" />
+        android:text="@string/_0"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/upVoteScroll"
         android:layout_width="67dp"
         android:layout_height="35dp"
         android:layout_alignTop="@+id/imageViewScroll"
-        android:layout_marginStart="-124dp"
-        android:layout_marginTop="155dp"
+        android:layout_marginStart="-67dp"
+        android:layout_marginTop="156dp"
         android:layout_marginBottom="53dp"
         android:layout_toEndOf="@+id/imageViewScroll"
         android:background="#E91E63"
@@ -45,11 +46,10 @@
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/viewScroll"
         android:layout_marginStart="0dp"
-        android:layout_marginBottom="0dp"
-        android:layout_toEndOf="@+id/viewScroll"
+        android:layout_marginBottom="2dp"
         android:background="#E91E63"
         android:contentDescription="@string/viewdisign"
         app:srcCompat="@drawable/ic_baseline_visibility_24" />

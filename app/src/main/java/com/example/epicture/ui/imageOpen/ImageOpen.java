@@ -65,11 +65,8 @@ public class ImageOpen extends AppCompatActivity {
     }
 
     public void favImage(View view) {
-        try {
-            ApiData.getApi().IMAGE.favoriteImage(this.image.getHash());
-            System.out.println("-----------------yolo : " + this.image.getHash());
-        } catch (Exception e) {
-            System.out.println("-------------------ok");
-        }
+        ApiData.getApi().IMAGE.favoriteImage(this.image.getHash()).queue(bool -> {
+            System.out.println(bool);
+        });
     }
 }

@@ -41,7 +41,7 @@ public class Image implements Serializable {
         this.like = like;
     }
 
-    private String format(int nb) {
+    static public String format(int nb) {
         String res = Integer.toString(nb);
         if (res.length() > 3) {
             return (res.substring(0, res.length() - 3) + "k");

@@ -36,19 +36,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
 
 
     public ImageAdapter() {
-        handler.postDelayed(new Runnable() {
-            private boolean state = false;
-            @Override
-            public void run() {
-                if (state != manager.isNextPageReady()) {
-                    state = manager.isNextPageReady();
-                    if (state) {
-                        notifyDataSetChanged();
-                    }
-                }
-                handler.postDelayed(this, 500);
-            }
-        }, 500);
+        manager = new GalleryManager();
+        manager.setOnsyncNeeded(() -> {
+            notifyDataSetChanged();
+        });
     }
 
     @Override
@@ -74,7 +65,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
                     .with(holder.itemView.getContext())
                     .load(image.getUrl())
                     .into(holder.image);
-            holder.view.setText(Integer.toString(image.getViews()));
+            holder.view.setText(Image.format(element.getViews()));
         }
     }
 

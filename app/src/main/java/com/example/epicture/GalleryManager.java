@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Handler;
 
 public class GalleryManager {
 
@@ -23,6 +24,9 @@ public class GalleryManager {
     private List<GalleryElement> gallery = new ArrayList<>();
 
     private CompletableFuture<Void> onReady;
+
+    private Runnable syncRunnable;
+    private android.os.Handler handler = new android.os.Handler();
 
     public GalleryManager() {
 
@@ -51,6 +55,12 @@ public class GalleryManager {
                 lastRequest = pages.next().submit().thenAcceptAsync((retrievedElements) -> {
                     gallery.addAll(retrievedElements);
                     loading.set(false);
+                    sync();
+                }).exceptionally(throwable -> {
+                    gallery.clear();
+                    loading.set(false);
+                    sync();
+                    return null;
                 });
             }
             lastRequest.join();
@@ -58,13 +68,23 @@ public class GalleryManager {
         });
     }
 
-    public void searchGallery(String text) {
+    private void sync() {
+        if (syncRunnable != null) {
+            handler.post(syncRunnable);
+        }
+    }
+
+    public void setOnsyncNeeded(Runnable runnable) {
+        this.syncRunnable = runnable;
+    }
+    public CompletableFuture<Void> searchGallery(String text) {
         onReady = ApiData.api.thenRunAsync(() -> {
+            gallery.clear();
+            sync();
             jmgur = ApiData.getApi();
             pages = jmgur.GALLERY.searchGallery(text);
-            gallery.clear();
-            nextPage();
         });
+        return nextPage();
     }
 
     public void favorites() {
@@ -78,6 +98,7 @@ public class GalleryManager {
 
     public void clear() {
         gallery.clear();
+        sync();
         onReady = ApiData.api.thenRunAsync(() -> {
             jmgur = ApiData.getApi();
             pages = jmgur.GALLERY.getGallery();
