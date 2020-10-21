@@ -1,5 +1,6 @@
 package com.example.epicture.ui.slideshow;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -54,6 +55,7 @@ public class SlideshowFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+        mAdapter.manager.home();
 
         mediaSearchInput = (TextInputLayout) root.findViewById(R.id.mediaSearch);
         Button selectMedia = root.findViewById(R.id.mediaSearchButton);
@@ -70,8 +72,7 @@ public class SlideshowFragment extends Fragment {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         Intent intent = new Intent(v.getContext(), ImageOpen.class);
-                        GalleryImage galleryImage = GalleryManager.getImagesFrom(mAdapter.manager.getGallery().get(position)).get(0);
-                        Image img = new Image(galleryImage);
+                        Image img = new Image(mAdapter.manager.getGallery().get(position));
                         intent.putExtra("Image", img);
                         startActivity(intent);
                     }
@@ -79,10 +80,18 @@ public class SlideshowFragment extends Fragment {
         return root;
     }
 
-
-
     private void searchMedia() {
         String query = mediaSearchInput.getEditText().getText().toString();
         mAdapter.manager.searchGallery(query);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 }

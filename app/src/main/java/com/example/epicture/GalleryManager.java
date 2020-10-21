@@ -25,6 +25,10 @@ public class GalleryManager {
     private CompletableFuture<Void> onReady;
 
     public GalleryManager() {
+
+    }
+
+    public void home() {
         onReady = ApiData.api.thenRunAsync(() -> {
             jmgur = ApiData.getApi();
             pages = jmgur.GALLERY.getGallery();
@@ -58,6 +62,15 @@ public class GalleryManager {
         onReady = ApiData.api.thenRunAsync(() -> {
             jmgur = ApiData.getApi();
             pages = jmgur.GALLERY.searchGallery(text);
+            gallery.clear();
+            nextPage();
+        });
+    }
+
+    public void favorites() {
+        onReady = ApiData.api.thenRunAsync(() -> {
+            jmgur = ApiData.getApi();
+            pages = jmgur.ACCOUNT.getSelfFavorites();
             gallery.clear();
             nextPage();
         });

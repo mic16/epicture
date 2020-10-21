@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
+import com.example.epicture.GalleryManager;
+
+import net.azzerial.jmgur.api.entities.GalleryElement;
 import net.azzerial.jmgur.api.entities.GalleryImage;
 
 import java.io.Serializable;
@@ -15,10 +18,11 @@ public class Image implements Serializable {
     public Image() {
     }
 
-    public Image(GalleryImage img) {
-        this.imageUrl = img.getUrl();
+    public Image(GalleryElement img) {
+        GalleryImage galleryImage = GalleryManager.getImagesFrom(img).get(0);
+        this.imageUrl = galleryImage.getUrl();
         this.title = img.getTitle();
-        this.hash = img.getHash();
+        this.hash = galleryImage.getHash();
         this.nbView = img.getViews();
         this.description = img.getDescription();
         this.upVote = img.getUps();

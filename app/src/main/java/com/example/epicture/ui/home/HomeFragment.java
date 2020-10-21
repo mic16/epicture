@@ -1,5 +1,6 @@
 package com.example.epicture.ui.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -23,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.epicture.ApiData;
+import com.example.epicture.GalleryManager;
 import com.example.epicture.ItemClickSupport;
 import com.example.epicture.R;
 import com.example.epicture.ui.imageOpen.ImageOpen;
@@ -41,7 +44,6 @@ import java.util.concurrent.CompletableFuture;
 
 public class HomeFragment extends Fragment {
 
-    private List<Image> imageList = new ArrayList<>();
     private RecyclerView recyclerView;
     private ImageAdapter mAdapter;
 
@@ -53,48 +55,30 @@ public class HomeFragment extends Fragment {
 
         mAdapter = new ImageAdapter();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-
         recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-
-        ItemClickSupport.addTo(recyclerView, R.layout.fragment_home)
+        mAdapter.manager.favorites();
+        ItemClickSupport.addTo(recyclerView, R.layout.fragment_slideshow)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         Intent intent = new Intent(v.getContext(), ImageOpen.class);
-                        intent.putExtra("Image", imageList.get(position));
+                        Image img = new Image(mAdapter.manager.getGallery().get(position));
+                        intent.putExtra("Image", img);
                         startActivity(intent);
                     }
                 });
-
-        CompletableFuture.runAsync(() -> {
-            ApiData.getApi().ACCOUNT.getSelfFavorites().get().submit().thenAcceptAsync(
-                    img -> {
-                        for (int k = 0; k < img.size(); k++) {
-                            if (img.get(k) instanceof GalleryAlbum) {
-                                GalleryAlbum gAlbum = (GalleryAlbum) img.get(k);
-                                List<GalleryImage> gImage = gAlbum.getImages();
-                                for (int i = 0; i < gImage.size(); i++) {
-                                    GalleryImage image = gImage.get(i);
-                                    Image j = new Image(image.getUrl(), image.getTitle(), image.getDescription(), image.getHash(), image.getViews(), image.getUps(), image.getDowns(), image.getFavoriteCount());
-                                    imageList.add(j);
-                                }
-                            } else if (img.get(k) instanceof GalleryImage) {
-                                GalleryImage gImage = (GalleryImage) img.get(k);
-                                GalleryImage image = gImage;
-                                Image j = new Image(image.getUrl(), image.getTitle(), image.getDescription(), image.getHash(), image.getViews(), image.getUps(), image.getDowns(), image.getFavoriteCount());
-                                imageList.add(j);
-                            }
-                        }
-                    }
-            ).exceptionally(e -> {
-                e.printStackTrace();
-                return null;
-            }).join();
-        }).thenRunAsync(() -> {
-            mAdapter.notifyDataSetChanged();
-        });
         return root;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 }
