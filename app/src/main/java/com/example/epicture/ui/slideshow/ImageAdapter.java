@@ -1,5 +1,6 @@
 package com.example.epicture.ui.slideshow;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,29 +10,45 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.epicture.GalleryManager;
 import com.example.epicture.R;
+
+import net.azzerial.jmgur.api.entities.GalleryElement;
+import net.azzerial.jmgur.api.entities.GalleryImage;
 
 import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder> {
+    public GalleryManager manager = new GalleryManager();
+    private Handler handler = new Handler();
 
-    private List<Image> imageList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView year, genre;
+        public TextView view;
         public ImageView image;
 
         public MyViewHolder(View view) {
             super(view);
             image = (ImageView) view.findViewById(R.id.imageViewScroll);
-            genre = (TextView) view.findViewById(R.id.titleScroll);
-            year = (TextView) view.findViewById(R.id.upVoteScroll);
+            this.view = (TextView) view.findViewById(R.id.viewScroll);
         }
     }
 
 
-    public ImageAdapter(List<Image> moviesList) {
-        this.imageList = moviesList;
+    public ImageAdapter() {
+        handler.postDelayed(new Runnable() {
+            private boolean state = false;
+            @Override
+            public void run() {
+                if (state != manager.isNextPageReady()) {
+                    state = manager.isNextPageReady();
+                    if (state) {
+                        notifyDataSetChanged();
+                    }
+                }
+                handler.postDelayed(this, 500);
+            }
+        }, 500);
     }
 
     @Override
@@ -44,22 +61,23 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        if (position >= imageList.size()) {
+        if (position >= manager.getGallery().size()) {
             Glide
                     .with(holder.itemView.getContext())
                     .load(R.drawable.ic_baseline_refresh_24)
                     .into(holder.image);
         } else {
-            Image image = imageList.get(position);
+            GalleryElement element = manager.getGallery().get(position);
+            List<GalleryImage> images = GalleryManager.getImagesFrom(element);
+            GalleryImage image = images.get(0);
             Glide
                     .with(holder.itemView.getContext())
-                    .load(image.getImage())
+                    .load(image.getUrl())
                     .into(holder.image);
-            holder.genre.setText(image.getGenre());
-            holder.year.setText(image.getYear());
+            holder.view.setText(Integer.toString(image.getViews()));
         }
     }
 
     @Override
-    public int getItemCount() { return (Math.max(imageList.size(), 50)); }
+    public int getItemCount() { return (manager.getGallery().size()); }
 }

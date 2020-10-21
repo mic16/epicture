@@ -43,7 +43,7 @@ public class User extends AppCompatActivity {
         TextView userNameView = (TextView)hView.findViewById(R.id.userProfilName);
         TextView userPTSView = (TextView)hView.findViewById(R.id.userProfilPTS);
         ImageView userPictureView  = (ImageView)hView.findViewById(R.id.userProfilPicture);
-        ApiData.api.ACCOUNT.getSelfAccount().queue(account -> {
+        ApiData.getApi().ACCOUNT.getSelfAccount().queue(account -> {
             Bitmap img = getBitmapImageFromUrl(account.getAvatar().getUrl());
             if (img != null){
                 userPictureView.setImageBitmap(img);
@@ -51,7 +51,7 @@ public class User extends AppCompatActivity {
             userNameView.setText(account.getName());
             userPTSView.setText("PTS : " + account.getReputationScore());
         });
-        ApiData.api.ACCOUNT.getSelfAccount().queue(account -> {
+        ApiData.getApi().ACCOUNT.getSelfAccount().queue(account -> {
             userNameView.setText(account.getName());
             userPTSView.setText("PTS : " + account.getReputationScore());
         });

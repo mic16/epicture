@@ -19,8 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.epicture.ApiData;
+import com.example.epicture.GalleryManager;
 import com.example.epicture.ItemClickSupport;
 import com.example.epicture.R;
+import com.example.epicture.ui.imageOpen.ImageOpen;
 import com.google.android.material.textfield.TextInputLayout;
 
 import net.azzerial.jmgur.api.entities.GalleryAlbum;
@@ -47,9 +49,9 @@ public class SlideshowFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
         recyclerView = (RecyclerView) root.findViewById(R.id.my_recycler_view);
 
-        mAdapter = new ImageAdapter(imageList);
+        mAdapter = new ImageAdapter();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 1));
+        recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
@@ -67,46 +69,20 @@ public class SlideshowFragment extends Fragment {
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        RestAction<Boolean> res = ApiData.api.IMAGE.favoriteImage(imageList.get(position).getHash());
-                        res.queue(bool ->{
-                            System.out.println(bool);
-                        });
-                        Log.e("TAG", "Position : "+position + ": " +imageList.get(position).getHash() );
+                        Intent intent = new Intent(v.getContext(), ImageOpen.class);
+                        GalleryImage galleryImage = GalleryManager.getImagesFrom(mAdapter.manager.getGallery().get(position)).get(0);
+                        Image img = new Image(galleryImage);
+                        intent.putExtra("Image", img);
+                        startActivity(intent);
                     }
                 });
-
         return root;
     }
 
+
+
     private void searchMedia() {
         String query = mediaSearchInput.getEditText().getText().toString();
-        CompletableFuture.runAsync(() -> {
-            ApiData.api.GALLERY.searchGallery(query).get().submit().thenAcceptAsync(
-                    img -> {
-                        for (int k = 0; k < img.size(); k++) {
-                            if (img.get(k) instanceof GalleryAlbum) {
-                                GalleryAlbum gAlbum = (GalleryAlbum) img.get(k);
-                                List<GalleryImage> gImage = gAlbum.getImages();
-                                for (int i = 0; i < gImage.size(); i++) {
-                                    GalleryImage image = gImage.get(i);
-                                    Image j = new Image(image.getUrl(), image.getTitle(), Integer.toString(image.getScore()), image.getHash());
-                                    imageList.add(j);
-                                }
-                            } else if (img.get(k) instanceof GalleryImage) {
-                                GalleryImage gImage = (GalleryImage) img.get(k);
-                                GalleryImage image = gImage;
-                                System.out.println(image.getTitle());
-                                Image j = new Image(image.getUrl(), image.getTitle(), Integer.toString(image.getScore()), image.getHash());
-                                imageList.add(j);
-                            }
-                        }
-                    }
-            ).exceptionally(e -> {
-                e.printStackTrace();
-                return null;
-            }).join();
-        }).thenRunAsync(() -> {
-            mAdapter.notifyDataSetChanged();
-        });
+        mAdapter.manager.searchGallery(query);
     }
 }

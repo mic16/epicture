@@ -1,5 +1,6 @@
 package com.example.epicture.ui.home;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -22,7 +23,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.epicture.ApiData;
+import com.example.epicture.ItemClickSupport;
 import com.example.epicture.R;
+import com.example.epicture.ui.imageOpen.ImageOpen;
 import com.example.epicture.ui.slideshow.Image;
 import com.example.epicture.ui.slideshow.ImageAdapter;
 
@@ -48,15 +51,25 @@ public class HomeFragment extends Fragment {
 
         recyclerView = (RecyclerView) root.findViewById(R.id.favoriteScroll);
 
-        mAdapter = new ImageAdapter(imageList);
+        mAdapter = new ImageAdapter();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
 
         recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
+        ItemClickSupport.addTo(recyclerView, R.layout.fragment_home)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Intent intent = new Intent(v.getContext(), ImageOpen.class);
+                        intent.putExtra("Image", imageList.get(position));
+                        startActivity(intent);
+                    }
+                });
+
         CompletableFuture.runAsync(() -> {
-            ApiData.api.ACCOUNT.getSelfFavorites().get().submit().thenAcceptAsync(
+            ApiData.getApi().ACCOUNT.getSelfFavorites().get().submit().thenAcceptAsync(
                     img -> {
                         for (int k = 0; k < img.size(); k++) {
                             if (img.get(k) instanceof GalleryAlbum) {
@@ -64,14 +77,13 @@ public class HomeFragment extends Fragment {
                                 List<GalleryImage> gImage = gAlbum.getImages();
                                 for (int i = 0; i < gImage.size(); i++) {
                                     GalleryImage image = gImage.get(i);
-                                    Image j = new Image(image.getUrl(), image.getTitle(), Integer.toString(image.getScore()), image.getHash());
+                                    Image j = new Image(image.getUrl(), image.getTitle(), image.getDescription(), image.getHash(), image.getViews(), image.getUps(), image.getDowns(), image.getFavoriteCount());
                                     imageList.add(j);
                                 }
                             } else if (img.get(k) instanceof GalleryImage) {
                                 GalleryImage gImage = (GalleryImage) img.get(k);
                                 GalleryImage image = gImage;
-                                System.out.println(image.getTitle());
-                                Image j = new Image(image.getUrl(), image.getTitle(), Integer.toString(image.getScore()), image.getHash());
+                                Image j = new Image(image.getUrl(), image.getTitle(), image.getDescription(), image.getHash(), image.getViews(), image.getUps(), image.getDowns(), image.getFavoriteCount());
                                 imageList.add(j);
                             }
                         }

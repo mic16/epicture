@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFEB3B"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
@@ -14,56 +13,44 @@
 
     <ImageView
         android:id="@+id/imageViewScroll"
-        android:layout_width="299dp"
-        android:layout_height="221dp"
+        android:layout_width="184dp"
+        android:layout_height="155dp"
+        android:scaleType="fitXY"
         android:contentDescription="@string/img" />
 
     <TextView
-        android:id="@+id/titleScroll"
-        android:layout_width="298dp"
-        android:layout_height="43dp"
-        android:layout_below="@id/imageViewScroll"
-        android:layout_marginTop="5dp" />
-
-    <TextView
         android:id="@+id/viewScroll"
-        android:layout_width="70dp"
-        android:layout_height="43dp"
+        android:layout_width="36dp"
+        android:layout_height="35dp"
         android:layout_below="@id/imageViewScroll"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="41dp"
-        android:layout_toEndOf="@+id/titleScroll"
+        android:layout_alignStart="@+id/imageViewScroll"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:background="#E91E63"
         android:text="@string/_0" />
 
     <TextView
         android:id="@+id/upVoteScroll"
-        android:layout_width="70dp"
-        android:layout_height="47dp"
-        android:layout_above="@+id/titleScroll"
+        android:layout_width="67dp"
+        android:layout_height="35dp"
         android:layout_alignTop="@+id/imageViewScroll"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="94dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="85dp"
+        android:layout_marginStart="-124dp"
+        android:layout_marginTop="155dp"
+        android:layout_marginBottom="53dp"
         android:layout_toEndOf="@+id/imageViewScroll"
+        android:background="#E91E63"
         android:text="@string/_0"
         android:textColor="@color/year" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="52dp"
-        android:layout_height="54dp"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
         android:layout_alignBottom="@+id/viewScroll"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="224dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="1dp"
-        android:layout_toEndOf="@+id/titleScroll"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/viewScroll"
+        android:background="#E91E63"
         android:contentDescription="@string/viewdisign"
         app:srcCompat="@drawable/ic_baseline_visibility_24" />
 

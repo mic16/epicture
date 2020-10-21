@@ -41,10 +41,11 @@ public class ConnectActivity extends AppCompatActivity {
                 try {
                     final OAuth2 oauth = OAuth2.fromUrl(url);
 
-                    ApiData.api = JmgurBuilder
+                    ApiData.api.complete(JmgurBuilder
                             .of(ApiData.CLIENT_ID)
                             .setOAuth(oauth)
-                            .build();
+                            .build()
+                    );
                     finish();
                 } catch (Exception e) {
                     Log.i(ApiData.TAG, e.getMessage());
@@ -52,7 +53,7 @@ public class ConnectActivity extends AppCompatActivity {
                     return false;
                 }
 
-                ApiData.api.ACCOUNT.getSelfAccount().queue(
+                ApiData.getApi().ACCOUNT.getSelfAccount().queue(
                         account -> Log.i(ApiData.TAG, "Logged in account: " + account),
                         Throwable::printStackTrace
                 );
