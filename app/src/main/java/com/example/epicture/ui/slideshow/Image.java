@@ -10,19 +10,40 @@ import net.azzerial.jmgur.api.entities.GalleryElement;
 import net.azzerial.jmgur.api.entities.GalleryImage;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Image implements Serializable {
     private String title, imageUrl, hash, description;
     private int upVote, downVote, like, nbView;
 
+    private List<Image> listImage = new ArrayList<>();
+
     public Image() {
     }
 
     public Image(GalleryElement img) {
-        GalleryImage galleryImage = GalleryManager.getImagesFrom(img).get(0);
+        List<GalleryImage> list = GalleryManager.getImagesFrom(img);
+
+        GalleryImage galleryImage = list.get(0);
         this.imageUrl = galleryImage.getUrl();
         this.title = img.getTitle();
         this.hash = galleryImage.getHash();
+        this.nbView = img.getViews();
+        this.description = galleryImage.getDescription();
+        this.upVote = img.getUps();
+        this.downVote = img.getDowns();
+        this.like = img.getFavoriteCount();
+        System.out.println("size : " + list.size());
+        for (int i = 0; i < list.size(); i++) {
+            listImage.add(new Image(list.get(i)));
+        }
+    }
+
+    public Image(GalleryImage img) {
+        this.imageUrl = img.getUrl();
+        this.title = img.getTitle();
+        this.hash = img.getHash();
         this.nbView = img.getViews();
         this.description = img.getDescription();
         this.upVote = img.getUps();
@@ -30,7 +51,7 @@ public class Image implements Serializable {
         this.like = img.getFavoriteCount();
     }
 
-    public Image(String imageUrl, String title, String description ,String hash, int nbView, int upVote, int downVote, int like) {
+    public Image(String imageUrl, String title, String description ,String hash, String hashElement, int nbView, int upVote, int downVote, int like) {
         this.imageUrl = imageUrl;
         this.title = title;
         this.hash = hash;
@@ -47,6 +68,14 @@ public class Image implements Serializable {
             return (res.substring(0, res.length() - 3) + "k");
         }
         return res;
+    }
+
+    public List<Image> getListImage() {
+        return listImage;
+    }
+
+    public void setListImage(List<Image> title) {
+        this.listImage = listImage;
     }
 
     public String getTitle() {
@@ -66,7 +95,7 @@ public class Image implements Serializable {
     }
 
     public String getHash() {
-        return  hash;
+        return hash;
     }
 
     public void setHash(String hash) {

@@ -22,6 +22,7 @@ public class ImageOpen extends AppCompatActivity {
     private Image image;
     private RestAction<List<GalleryElement>> favorite;
     private ImageView favView;
+    int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +31,10 @@ public class ImageOpen extends AppCompatActivity {
         image = (Image)getIntent().getSerializableExtra("Image");
         favorite = ApiData.getApi().ACCOUNT.getSelfFavorites().get();
         favView = (ImageView)findViewById(R.id.likeFullScreen);
-
+        count = 0;
         favorite.queue(fav ->{
             for (int i = 0; i < fav.size(); i++) {
+                System.out.println(fav.get(i).getHash() + " : " + image.getHash());
                  if (fav.get(i).getHash().compareTo(image.getHash()) == 0) {
                     favView.setImageResource(R.drawable.ic_baseline_favorite_24);
                     break;
@@ -65,8 +67,39 @@ public class ImageOpen extends AppCompatActivity {
     }
 
     public void favImage(View view) {
+        System.out.println("wtf : " + this.image.getHash());
         ApiData.getApi().IMAGE.favoriteImage(this.image.getHash()).queue(bool -> {
-            System.out.println(bool);
+            if (bool) {
+                favView.setImageResource(R.drawable.ic_baseline_favorite_24);
+            } else {
+                favView.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+            }
         });
+    }
+
+    public void nextFullScreen(View view) {
+        if (count >= image.getListImage().size() - 1) {
+            return;
+        } else {
+            ImageView userPictureView = (ImageView)findViewById(R.id.imageViewFullScreen);
+            count++;
+            Glide
+                    .with(this)
+                    .load(image.getListImage().get(count).getImageUrl())
+                    .into(userPictureView);
+        }
+    }
+
+    public void backFullScreen(View view) {
+        if (count <= 0) {
+            return;
+        } else {
+            ImageView userPictureView = (ImageView)findViewById(R.id.imageViewFullScreen);
+            count--;
+            Glide
+                    .with(this)
+                    .load(image.getListImage().get(count).getImageUrl())
+                    .into(userPictureView);
+        }
     }
 }
