@@ -24,4 +24,6 @@
     <string name="viewdisign">viewDisign</string>
     <string name="_0">0</string>
     <string name="imgfullscreen">imgFullScreen</string>
+    <string name="blocked_users">Blocked Users</string>
+    <string name="unblock_user">Unblock</string>
 </resources>
