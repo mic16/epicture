@@ -88,11 +88,17 @@ public class PostMedia extends AppCompatActivity {
 
         System.out.println(title + " : " + description + " : " + path);
 
-        final ImageUploadDTO image = ImageUploadDTO.create()
-                .base64(base64)
-                .setTitle(title)
-                .setDescription(description);
-
+        final ImageUploadDTO image;
+        if (!description.isEmpty()) {
+            image = ImageUploadDTO.create()
+                    .base64(base64)
+                    .setTitle(title)
+                    .setDescription(description);
+        } else {
+            image = ImageUploadDTO.create()
+                    .base64(base64)
+                    .setTitle(title);
+        }
         ApiData.getApi().IMAGE.uploadImage(image).queue(
                 System.out::println,
                 Throwable::printStackTrace
@@ -121,7 +127,7 @@ public class PostMedia extends AppCompatActivity {
     public void sendImage(View view) {
         String title = this.mediaTitleInput.getEditText().getText().toString();
         String description = this.mediaDescriptionInput.getEditText().getText().toString();
-        if (!title.isEmpty() && !description.isEmpty() && !this.path.isEmpty()) {
+        if (!title.isEmpty() && !this.path.isEmpty()) {
             uploadImage(this.path, title, description);
             finish();
         }

@@ -23,6 +23,7 @@ public class ImageOpen extends AppCompatActivity {
     private Image image;
     private RestAction<List<GalleryElement>> favorite;
     private ImageView favView;
+    private TextView pageNb;
     int count;
 
     @Override
@@ -35,8 +36,7 @@ public class ImageOpen extends AppCompatActivity {
         count = 0;
         favorite.queue(fav ->{
             for (int i = 0; i < fav.size(); i++) {
-                System.out.println(fav.get(i).getHash() + " : " + image.getHash());
-                 if (fav.get(i).getHash().compareTo(image.getHash()) == 0) {
+                 if (fav.get(i).getHash().compareTo(image.getFavoriteHash()) == 0) {
                     favView.setImageResource(R.drawable.ic_baseline_favorite_24);
                     break;
                 }
@@ -66,6 +66,9 @@ public class ImageOpen extends AppCompatActivity {
 
         TextView like = (TextView)findViewById(R.id.nbLikeFullScreen);
         like.setText(image.getLike());
+
+        pageNb = (TextView)findViewById(R.id.pageOnPage);
+        pageNb.setText((count + 1) + "/" + image.getListImage().size());
     }
 
     public void favImage(View view) {
@@ -89,6 +92,7 @@ public class ImageOpen extends AppCompatActivity {
                     .load(image.getListImage().get(count).getImageUrl())
                     .into(userPictureView);
         }
+        pageNb.setText((count + 1) + "/" + image.getListImage().size());
     }
 
     public void backFullScreen(View view) {
@@ -102,5 +106,6 @@ public class ImageOpen extends AppCompatActivity {
                     .load(image.getListImage().get(count).getImageUrl())
                     .into(userPictureView);
         }
+        pageNb.setText((count + 1) + "/" + image.getListImage().size());
     }
 }
