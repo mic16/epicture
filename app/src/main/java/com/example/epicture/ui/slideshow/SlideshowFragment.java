@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -29,7 +31,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import net.azzerial.jmgur.api.entities.GalleryAlbum;
 import net.azzerial.jmgur.api.entities.GalleryElement;
 import net.azzerial.jmgur.api.entities.GalleryImage;
+import net.azzerial.jmgur.api.entities.dto.GalleryDTO;
 import net.azzerial.jmgur.api.entities.dto.GallerySearchDTO;
+import net.azzerial.jmgur.api.entities.subentities.GallerySort;
 import net.azzerial.jmgur.api.requests.restaction.PagedRestAction;
 import net.azzerial.jmgur.api.requests.restaction.RestAction;
 
@@ -43,11 +47,16 @@ public class SlideshowFragment extends Fragment {
     private RecyclerView recyclerView;
     private ImageAdapter mAdapter;
     private TextInputLayout mediaSearchInput;
+    private Switch nsfwSwitch;
+    private Spinner sortSpinner;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
         recyclerView = (RecyclerView) root.findViewById(R.id.my_recycler_view);
+
+        nsfwSwitch = (Switch) root.findViewById(R.id.NSFWSwitch);
+        sortSpinner = (Spinner) root.findViewById(R.id.spinnerSort);
 
         mAdapter = new ImageAdapter();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -75,12 +84,37 @@ public class SlideshowFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
+        mAdapter.manager.updateDTO(null);
         return root;
     }
 
     private void searchMedia() {
+        GalleryDTO gallery = GalleryDTO.create();
+
+        mAdapter.manager.clear();
+        switch (sortSpinner.getSelectedItemPosition()) {
+            case 0:
+                gallery.setSort(GallerySort.VIRAL);
+                break;
+            case 1:
+                gallery.setSort(GallerySort.TOP);
+                break;
+            case 2:
+                gallery.setSort(GallerySort.TIME);
+                break;
+            case 3:
+                gallery.setSort(GallerySort.RISING);
+                break;
+        }
+        System.out.println(sortSpinner.getSelectedItemPosition());
+        gallery.showNSFW(nsfwSwitch.isEnabled());
+        mAdapter.manager.updateDTO(gallery);
         String query = mediaSearchInput.getEditText().getText().toString();
-        mAdapter.manager.searchGallery(query);
+        if (query.isEmpty()) {
+            mAdapter.manager.getGallery();
+        } else {
+            mAdapter.manager.searchGallery(query);
+        }
     }
 
     @Override

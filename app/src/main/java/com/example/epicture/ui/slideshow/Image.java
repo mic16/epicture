@@ -20,7 +20,7 @@ import java.util.List;
 public class Image implements Serializable {
     private String title, imageUrl, hash, description, favoriteHash, author;
     private int upVote, downVote, like, nbView;
-    private boolean isAlbum;
+    private boolean isAlbum, isFavorite;
     private OffsetDateTime creationDate;
 
     private List<Image> listImage = new ArrayList<>();
@@ -37,6 +37,7 @@ public class Image implements Serializable {
         if (img instanceof GalleryAlbum) {
             isAlbum = true;
         }
+        this.isFavorite = img.isFavorite();
         this.favoriteHash = img.getHash();
         this.imageUrl = galleryImage.getUrl();
         this.title = img.getTitle();
@@ -73,6 +74,14 @@ public class Image implements Serializable {
             return (res.substring(0, res.length() - 3) + "k");
         }
         return res;
+    }
+
+    public boolean getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(Boolean isFavorite) {
+        this.isFavorite = isFavorite;
     }
 
     public boolean getIsAlbum() {

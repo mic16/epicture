@@ -18,6 +18,8 @@ import net.azzerial.jmgur.api.requests.restaction.RestAction;
 
 import java.util.List;
 
+import fr.shiranuit.ImgurRequest.ImgurRequest;
+
 public class ImageOpen extends AppCompatActivity {
 
     private Image image;
@@ -31,17 +33,14 @@ public class ImageOpen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_open);
         image = (Image)getIntent().getSerializableExtra("Image");
-        favorite = ApiData.getApi().ACCOUNT.getSelfFavorites().get();
         favView = (ImageView)findViewById(R.id.likeFullScreen);
         count = 0;
-        favorite.queue(fav ->{
-            for (int i = 0; i < fav.size(); i++) {
-                 if (fav.get(i).getHash().compareTo(image.getFavoriteHash()) == 0) {
-                    favView.setImageResource(R.drawable.ic_baseline_favorite_24);
-                    break;
-                }
-            }
-        });
+
+
+        if (image.getIsFavorite()) {
+            favView.setImageResource(R.drawable.ic_baseline_favorite_24);
+        }
+
         ImageView userPictureView = (ImageView)findViewById(R.id.imageViewFullScreen);
         Glide
                 .with(this)
@@ -78,6 +77,15 @@ public class ImageOpen extends AppCompatActivity {
     }
 
     public void favImage(View view) {
+        if (this.image.getIsAlbum()) {
+            ImgurRequest.ALBUM.favoriteAlbum(this.image.getFavoriteHash()).queue(bool -> {
+                if (bool) {
+                    favView.setImageResource(R.drawable.ic_baseline_favorite_24);
+                } else {
+                    favView.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                }
+            });
+        }
         ApiData.getApi().IMAGE.favoriteImage(this.image.getFavoriteHash()).queue(bool -> {
             if (bool) {
                 favView.setImageResource(R.drawable.ic_baseline_favorite_24);

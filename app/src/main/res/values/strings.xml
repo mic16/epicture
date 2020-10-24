@@ -26,4 +26,12 @@
     <string name="blocked_users">Blocked Users</string>
     <string name="unblock_user">Unblock</string>
     <string name="favourites">Favourites</string>
+
+    <string-array name="search_sort">
+        <item>viral</item>
+        <item>top</item>
+        <item>time</item>
+        <item>rising</item>
+    </string-array>
+
 </resources>
