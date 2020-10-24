@@ -37,7 +37,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
 
     public ImageAdapter() {
         manager = new GalleryManager();
-        manager.setOnsyncNeeded(() -> {
+        manager.setOnSyncNeeded(() -> {
             notifyDataSetChanged();
         });
     }

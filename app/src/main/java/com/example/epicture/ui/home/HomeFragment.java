@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-        mAdapter.manager.favorites();
+        mAdapter.manager.loadSelfFavorites();
         ItemClickSupport.addTo(recyclerView, R.layout.fragment_home)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override

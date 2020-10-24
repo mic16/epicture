@@ -43,7 +43,7 @@ public class GalleryFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-        mAdapter.manager.userPicture();
+        mAdapter.manager.loadSelfAccount();
 
         ItemClickSupport.addTo(recyclerView, R.layout.fragment_gallery)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {

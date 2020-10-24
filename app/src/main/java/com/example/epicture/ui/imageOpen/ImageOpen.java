@@ -67,7 +67,7 @@ public class ImageOpen extends AppCompatActivity {
     }
 
     public void favImage(View view) {
-        ApiData.getApi().IMAGE.favoriteImage(this.image.getHash()).queue(bool -> {
+        ApiData.getApi().IMAGE.favoriteImage(this.image.getFavoriteHash()).queue(bool -> {
             if (bool) {
                 favView.setImageResource(R.drawable.ic_baseline_favorite_24);
             } else {

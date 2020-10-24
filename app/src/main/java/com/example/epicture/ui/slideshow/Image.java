@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.example.epicture.GalleryManager;
 
+import net.azzerial.jmgur.api.entities.GalleryAlbum;
 import net.azzerial.jmgur.api.entities.GalleryElement;
 import net.azzerial.jmgur.api.entities.GalleryImage;
 
@@ -14,8 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Image implements Serializable {
-    private String title, imageUrl, hash, description;
+    private String title, imageUrl, hash, description, favoriteHash;
     private int upVote, downVote, like, nbView;
+    private boolean isAlbum;
 
     private List<Image> listImage = new ArrayList<>();
 
@@ -24,8 +26,14 @@ public class Image implements Serializable {
 
     public Image(GalleryElement img) {
         List<GalleryImage> list = GalleryManager.getImagesFrom(img);
+        isAlbum = false;
 
         GalleryImage galleryImage = list.get(0);
+
+        if (img instanceof GalleryAlbum) {
+            isAlbum = true;
+        }
+        this.favoriteHash = img.getHash();
         this.imageUrl = galleryImage.getUrl();
         this.title = img.getTitle();
         this.hash = galleryImage.getHash();
@@ -51,23 +59,20 @@ public class Image implements Serializable {
         this.like = img.getFavoriteCount();
     }
 
-    public Image(String imageUrl, String title, String description ,String hash, String hashElement, int nbView, int upVote, int downVote, int like) {
-        this.imageUrl = imageUrl;
-        this.title = title;
-        this.hash = hash;
-        this.nbView = nbView;
-        this.description = description;
-        this.upVote = upVote;
-        this.downVote = downVote;
-        this.like = like;
-    }
-
     static public String format(int nb) {
         String res = Integer.toString(nb);
         if (res.length() > 3) {
             return (res.substring(0, res.length() - 3) + "k");
         }
         return res;
+    }
+
+    public boolean getIsAlbum() {
+        return isAlbum;
+    }
+
+    public void setIsAlbum(Boolean isAlbum) {
+        this.isAlbum = isAlbum;
     }
 
     public List<Image> getListImage() {
@@ -84,6 +89,14 @@ public class Image implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getFavoriteHash() {
+        return favoriteHash;
+    }
+
+    public void setFavoriteHash(String favoriteHash) {
+        this.favoriteHash = favoriteHash;
     }
 
     public String getImageUrl() {

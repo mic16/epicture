@@ -54,7 +54,7 @@ public class SlideshowFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-        mAdapter.manager.home();
+        mAdapter.manager.frontPage();
 
         mediaSearchInput = (TextInputLayout) root.findViewById(R.id.mediaSearch);
         Button selectMedia = root.findViewById(R.id.mediaSearchButton);

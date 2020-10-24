@@ -86,11 +86,14 @@ public class PostMedia extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         final String base64 = Base64.getEncoder().encodeToString(baos.toByteArray());
 
+        System.out.println(title + " : " + description + " : " + path);
+
         final ImageUploadDTO image = ImageUploadDTO.create()
                 .base64(base64)
                 .setTitle(title)
                 .setDescription(description);
 
+        ApiData.getApi().IMAGE.
         ApiData.getApi().IMAGE.uploadImage(image).queue(
                 System.out::println,
                 Throwable::printStackTrace
@@ -113,8 +116,6 @@ public class PostMedia extends AppCompatActivity {
             ImageView imageView = (ImageView) findViewById(R.id.imageViewMedia);
             if (imageView != null)
                 imageView.setImageBitmap(BitmapFactory.decodeFile(this.path));
-
-            //uploadImage(picturePath, "test", "yolo");
         }
     }
 
