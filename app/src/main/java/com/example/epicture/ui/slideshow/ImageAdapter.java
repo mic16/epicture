@@ -34,7 +34,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
         }
     }
 
-
     public ImageAdapter() {
         manager = new GalleryManager();
         manager.setOnSyncNeeded(() -> {
@@ -52,6 +51,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        if (position > getItemCount() - 15) {
+            manager.nextPage();
+        }
         if (position >= manager.getGallery().size()) {
             Glide
                     .with(holder.itemView.getContext())

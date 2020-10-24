@@ -67,7 +67,6 @@ public class SlideshowFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-        mAdapter.manager.frontPage();
         mediaSearchInput = (TextInputLayout) root.findViewById(R.id.mediaSearch);
         Button selectMedia = root.findViewById(R.id.mediaSearchButton);
 
@@ -116,7 +115,7 @@ public class SlideshowFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
-        mAdapter.manager.updateDTO(null);
+        mAdapter.manager.frontPage();
         return root;
     }
 
@@ -138,7 +137,7 @@ public class SlideshowFragment extends Fragment {
                 break;
         }
         gallery.showNSFW(nsfwSwitch.isEnabled());
-        //mAdapter.manager.updateDTO(gallery);
+        mAdapter.manager.updateDTO(gallery);
         String query = mediaSearchInput.getEditText().getText().toString();
         if (query.isEmpty()) {
             mAdapter.manager.frontPage();
