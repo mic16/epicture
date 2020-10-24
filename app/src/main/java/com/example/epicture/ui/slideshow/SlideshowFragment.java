@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 
@@ -66,7 +67,7 @@ public class SlideshowFragment extends Fragment {
         mAdapter.manager.frontPage();
 
         mediaSearchInput = (TextInputLayout) root.findViewById(R.id.mediaSearch);
-        Button selectMedia = root.findViewById(R.id.mediaSearchButton);
+        ImageButton selectMedia = root.findViewById(R.id.mediaSearchButton);
         selectMedia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -12,8 +12,10 @@
     android:paddingBottom="@dimen/row_padding_vertical">
 
     <com.example.epicture.SquareLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_width="180dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <!--
             your layouts/views/widgets
@@ -33,22 +35,10 @@
             android:layout_height="match_parent"
             android:layout_below="@id/imageViewScroll"
             android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@+id/upVoteScroll"
             android:layout_toEndOf="@+id/imageView2"
             android:background="#2443DA"
             android:text="@string/_0"
             android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/upVoteScroll"
-            android:layout_width="67dp"
-            android:layout_height="28dp"
-            android:layout_alignTop="@+id/imageViewScroll"
-            android:layout_marginStart="-67dp"
-            android:layout_marginTop="156dp"
-            android:layout_toEndOf="@+id/imageViewScroll"
-            android:background="#2443DA"
-            android:textColor="@color/year" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -59,6 +49,42 @@
             android:background="#2443DA"
             android:contentDescription="@string/viewdisign"
             app:srcCompat="@drawable/ic_baseline_visibility_24" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageViewScroll"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/textView6"
+            app:srcCompat="@drawable/ic_baseline_arrow_upward_24" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/imageView8"
+            android:text="/"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/imageViewScroll"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            app:srcCompat="@drawable/ic_baseline_arrow_downward_24" />
+
+        <TextView
+            android:id="@+id/upDownVotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageViewScroll"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/imageView3"
+            android:textSize="18sp" />
 
     </com.example.epicture.SquareLayout>
 

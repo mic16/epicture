@@ -24,13 +24,15 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView view;
+        public TextView viewScroll;
+        public TextView upDownVotes;
         public ImageView image;
 
         public MyViewHolder(View view) {
             super(view);
             image = (ImageView) view.findViewById(R.id.imageViewScroll);
-            this.view = (TextView) view.findViewById(R.id.viewScroll);
+            this.viewScroll = (TextView) view.findViewById(R.id.viewScroll);
+            this.upDownVotes = (TextView) view.findViewById(R.id.upDownVotes);
         }
     }
 
@@ -65,7 +67,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
                     .with(holder.itemView.getContext())
                     .load(image.getUrl())
                     .into(holder.image);
-            holder.view.setText(Image.format(element.getViews()));
+            holder.viewScroll.setText(Image.format(element.getViews()));
+            String tmp = Integer.toString(element.getUps() / element.getDowns() * 100 - 100) + "%";
+            holder.upDownVotes.setText(tmp);
         }
     }
 
