@@ -11,11 +11,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
-
-    public void connectUser(View view)
-    {
         Intent intent = new Intent(this, ConnectActivity.class);
         startActivityForResult(intent, 1);
     }
