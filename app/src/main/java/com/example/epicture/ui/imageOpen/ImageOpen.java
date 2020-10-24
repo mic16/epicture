@@ -66,6 +66,12 @@ public class ImageOpen extends AppCompatActivity {
 
         TextView like = (TextView)findViewById(R.id.nbLikeFullScreen);
         like.setText(image.getLike());
+
+        TextView author = (TextView)findViewById(R.id.authorName);
+        author.setText(image.getAuthor());
+
+        TextView creationDate = (TextView)findViewById(R.id.creationDate);
+        creationDate.setText(image.getCreationDate());
     }
 
     public void favImage(View view) {

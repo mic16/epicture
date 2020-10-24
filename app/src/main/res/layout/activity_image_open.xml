@@ -8,20 +8,17 @@
 
     <ImageView
         android:id="@+id/imageViewFullScreen"
-        android:layout_width="306dp"
-        android:layout_height="491dp"
+        android:layout_width="0dp"
+        android:layout_height="500dp"
         android:contentDescription="@string/imgfullscreen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.104"
+        app:layout_constraintEnd_toStartOf="@+id/nbDownFullscreen"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.066"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <TextView
         android:id="@+id/titleFullScreen"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -32,7 +29,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nbViewFullScreen" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/descriptionFullScreen"
@@ -44,11 +41,11 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/rectangle_drawable_back"
         android:padding="10dp"
-        android:scrollbars = "vertical"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleFullScreen" />
+        app:layout_constraintTop_toBottomOf="@+id/nbViewFullScreen" />
 
 
     <ImageView
@@ -57,8 +54,8 @@
         android:layout_height="40dp"
         android:clickable="true"
         android:onClick="favImage"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionFullScreen"
         app:layout_constraintEnd_toStartOf="@+id/nbLikeFullScreen"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewFullScreen"
         app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
 
     <ImageView
@@ -66,8 +63,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:paddingStart="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionFullScreen"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewFullScreen"
         app:srcCompat="@drawable/ic_baseline_visibility_24" />
 
     <TextView
@@ -94,7 +91,8 @@
         android:id="@+id/imageView4"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        app:layout_constraintStart_toEndOf="@+id/imageViewFullScreen"
+        android:paddingRight="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nbUpFullscreen"
         app:srcCompat="@drawable/ic_baseline_arrow_downward_24" />
 
@@ -102,8 +100,9 @@
         android:id="@+id/imageView5"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        app:layout_constraintStart_toEndOf="@+id/imageViewFullScreen"
-        app:layout_constraintTop_toTopOf="parent"
+        android:paddingRight="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleFullScreen"
         app:srcCompat="@drawable/ic_baseline_arrow_upward_24" />
 
     <TextView
@@ -111,9 +110,10 @@
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:gravity="center"
+        android:paddingRight="10dp"
         android:text="@string/_0"
         android:textSize="30sp"
-        app:layout_constraintStart_toEndOf="@+id/imageViewFullScreen"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <TextView
@@ -121,8 +121,53 @@
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:gravity="center"
+        android:paddingRight="10dp"
         android:text="@string/_0"
         android:textSize="30sp"
-        app:layout_constraintStart_toEndOf="@+id/imageViewFullScreen"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="Posted by "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleFullScreen" />
+
+    <TextView
+        android:id="@+id/authorName"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewFullScreen"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/titleFullScreen" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text=" the "
+        app:layout_constraintBottom_toTopOf="@+id/imageViewFullScreen"
+        app:layout_constraintStart_toEndOf="@+id/authorName"
+        app:layout_constraintTop_toBottomOf="@+id/titleFullScreen" />
+
+    <TextView
+        android:id="@+id/creationDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewFullScreen"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/titleFullScreen" />
 </androidx.constraintlayout.widget.ConstraintLayout>
