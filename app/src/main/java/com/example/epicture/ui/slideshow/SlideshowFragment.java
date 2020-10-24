@@ -14,6 +14,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -68,7 +69,7 @@ public class SlideshowFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         mediaSearchInput = (TextInputLayout) root.findViewById(R.id.mediaSearch);
-        Button selectMedia = root.findViewById(R.id.mediaSearchButton);
+        ImageButton selectMedia = root.findViewById(R.id.mediaSearchButton);
 
 
         mediaSearchInput.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {

@@ -8,13 +8,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/my_recycler_view"
-        android:layout_width="407dp"
-        android:layout_height="623dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mediaSearch" />
+        app:layout_constraintTop_toBottomOf="@+id/NSFWSwitch" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/mediaSearch"
@@ -33,34 +33,33 @@
             android:paddingHorizontal="20dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/mediaSearchButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingVertical="20dp"
-        android:text="Search"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Switch
         android:id="@+id/NSFWSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:paddingStart="10dp"
         android:text="NSFW"
-        app:layout_constraintBottom_toTopOf="@+id/my_recycler_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mediaSearch"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/mediaSearch" />
 
     <Spinner
         android:id="@+id/spinnerSort"
-        android:layout_width="271dp"
-        android:layout_height="22dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:entries="@array/search_sort"
+        android:paddingStart="10dp"
         app:layout_constraintBottom_toTopOf="@+id/my_recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/NSFWSwitch"
-        app:layout_constraintTop_toBottomOf="@+id/mediaSearch"/>
+        app:layout_constraintTop_toBottomOf="@+id/mediaSearch" />
+
+    <ImageButton
+        android:id="@+id/mediaSearchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_search_24"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerSort"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
