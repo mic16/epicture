@@ -16,4 +16,8 @@ public class Utils {
             return null;
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cyril

@@ -91,7 +91,7 @@ public class PostMedia extends AppCompatActivity {
                 .setTitle(title)
                 .setDescription(description);
 
-        ApiData.api.IMAGE.uploadImage(image).queue(
+        ApiData.getApi().IMAGE.uploadImage(image).queue(
                 System.out::println,
                 Throwable::printStackTrace
         );
