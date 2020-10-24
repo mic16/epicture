@@ -40,7 +40,6 @@ import java.util.concurrent.CompletableFuture;
 
 public class SlideshowFragment extends Fragment {
 
-    private List<Image> imageList = new ArrayList<>();
     private RecyclerView recyclerView;
     private ImageAdapter mAdapter;
     private TextInputLayout mediaSearchInput;
@@ -62,7 +61,6 @@ public class SlideshowFragment extends Fragment {
         selectMedia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageList.clear();
                 searchMedia();
             }
         });

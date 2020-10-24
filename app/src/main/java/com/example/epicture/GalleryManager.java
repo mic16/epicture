@@ -5,6 +5,9 @@ import net.azzerial.jmgur.api.Jmgur;
 import net.azzerial.jmgur.api.entities.GalleryAlbum;
 import net.azzerial.jmgur.api.entities.GalleryElement;
 import net.azzerial.jmgur.api.entities.GalleryImage;
+import net.azzerial.jmgur.api.entities.dto.GalleryDTO;
+import net.azzerial.jmgur.api.entities.dto.GallerySearchDTO;
+import net.azzerial.jmgur.api.entities.subentities.GallerySort;
 import net.azzerial.jmgur.api.requests.restaction.PagedRestAction;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +91,16 @@ public class GalleryManager {
     }
 
     public void favorites() {
+        onReady = ApiData.api.thenRunAsync(() -> {
+            jmgur = ApiData.getApi();
+            pages = jmgur.ACCOUNT.getSelfFavorites();
+            gallery.clear();
+            nextPage();
+        });
+    }
+
+    public void userPicture() {
+        GallerySearchDTO s;
         onReady = ApiData.api.thenRunAsync(() -> {
             jmgur = ApiData.getApi();
             pages = jmgur.ACCOUNT.getSelfFavorites();
