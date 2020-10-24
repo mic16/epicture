@@ -27,6 +27,8 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import fr.shiranuit.ImgurRequest.ImgurRequest;
+
 public class GalleryManager {
 
     private Jmgur jmgur = null;
@@ -50,7 +52,7 @@ public class GalleryManager {
         dto = GalleryDTO.create();
         onReady = ApiData.api.thenRunAsync(() -> {
             jmgur = ApiData.getApi();
-            pages = jmgur.GALLERY.getGallery(dto);
+            pages = ImgurRequest.GALLERY.getGallery(dto);
             endOfPages.set(false);
         });
     }
@@ -59,7 +61,7 @@ public class GalleryManager {
         onReady = ApiData.api.thenRunAsync(() -> {
             gallery.clear();
             jmgur = ApiData.getApi();
-            pages = jmgur.GALLERY.getGallery(dto);
+            pages = ImgurRequest.GALLERY.getGallery(dto);
             endOfPages.set(false);
         });
         return nextPage();
