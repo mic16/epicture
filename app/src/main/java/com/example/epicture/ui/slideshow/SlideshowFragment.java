@@ -6,12 +6,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -54,19 +60,45 @@ public class SlideshowFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
         recyclerView = (RecyclerView) root.findViewById(R.id.my_recycler_view);
-
         nsfwSwitch = (Switch) root.findViewById(R.id.NSFWSwitch);
         sortSpinner = (Spinner) root.findViewById(R.id.spinnerSort);
-
         mAdapter = new ImageAdapter();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         mAdapter.manager.frontPage();
-
         mediaSearchInput = (TextInputLayout) root.findViewById(R.id.mediaSearch);
         Button selectMedia = root.findViewById(R.id.mediaSearchButton);
+
+
+        mediaSearchInput.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    selectMedia.performClick();
+                    mediaSearchInput.getEditText().setText("");
+                }
+                return false;
+            }
+        });
+
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                searchMedia();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        nsfwSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                searchMedia();
+            }
+        });
+
         selectMedia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,7 +123,6 @@ public class SlideshowFragment extends Fragment {
     private void searchMedia() {
         GalleryDTO gallery = GalleryDTO.create();
 
-        mAdapter.manager.clear();
         switch (sortSpinner.getSelectedItemPosition()) {
             case 0:
                 gallery.setSort(GallerySort.VIRAL);
@@ -106,12 +137,11 @@ public class SlideshowFragment extends Fragment {
                 gallery.setSort(GallerySort.RISING);
                 break;
         }
-        System.out.println(sortSpinner.getSelectedItemPosition());
         gallery.showNSFW(nsfwSwitch.isEnabled());
-        mAdapter.manager.updateDTO(gallery);
+        //mAdapter.manager.updateDTO(gallery);
         String query = mediaSearchInput.getEditText().getText().toString();
         if (query.isEmpty()) {
-            mAdapter.manager.getGallery();
+            mAdapter.manager.frontPage();
         } else {
             mAdapter.manager.searchGallery(query);
         }

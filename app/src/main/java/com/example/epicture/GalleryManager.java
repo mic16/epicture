@@ -14,6 +14,7 @@ import net.azzerial.jmgur.api.entities.GalleryImage;
 import net.azzerial.jmgur.api.entities.GalleryProfile;
 
 import net.azzerial.jmgur.api.entities.dto.GalleryDTO;
+import net.azzerial.jmgur.api.entities.dto.GallerySearchDTO;
 import net.azzerial.jmgur.api.entities.subentities.FavoriteSort;
 import net.azzerial.jmgur.api.entities.subentities.GallerySort;
 
@@ -22,6 +23,7 @@ import net.azzerial.jmgur.internal.entities.GalleryAlbumImpl;
 import net.azzerial.jmgur.internal.entities.GalleryDTOImpl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -41,6 +43,7 @@ public class GalleryManager {
     private List<GalleryElement> gallery = new ArrayList<>();
 
     private CompletableFuture<Void> onReady;
+    private HashMap<String, Boolean> seen = new HashMap<>();
 
     private Runnable syncRunnable;
     private Handler handler;
@@ -60,6 +63,7 @@ public class GalleryManager {
     public CompletableFuture<Void> frontPage() {
         onReady = ApiData.api.thenRunAsync(() -> {
             gallery.clear();
+            seen.clear();
             jmgur = ApiData.getApi();
             pages = ImgurRequest.GALLERY.getGallery(dto);
             endOfPages.set(false);
@@ -86,12 +90,19 @@ public class GalleryManager {
             if (!loading.get()) {
                 loading.set(true);
                 lastRequest = pages.next().submit().thenAcceptAsync((retrievedElements) -> {
-                    gallery.addAll(retrievedElements);
-                    loading.set(false);
-                    sync();
+                    if (retrievedElements.size() > 0) {
+                        for (GalleryElement e : retrievedElements) {
+                            if (!seen.containsKey(e.getHash())) {
+                                gallery.add(e);
+                                seen.put(e.getHash(), new Boolean(true));
+                            }
+                        }
+                        sync();
+                    }
                     if (retrievedElements.size() == 0) {
                         endOfPages.set(true);
                     }
+                    loading.set(false);
                 }).exceptionally(throwable -> {
                     gallery.clear();
                     loading.set(false);
@@ -108,6 +119,7 @@ public class GalleryManager {
     public CompletableFuture<Void> searchGallery(String text) {
         onReady = ApiData.api.thenRunAsync(() -> {
             gallery.clear();
+            seen.clear();
             sync();
             jmgur = ApiData.getApi();
             pages = jmgur.GALLERY.searchGallery(text);
@@ -118,10 +130,11 @@ public class GalleryManager {
 
     public void clear() {
         gallery.clear();
+        seen.clear();
         sync();
         onReady = ApiData.api.thenRunAsync(() -> {
             jmgur = ApiData.getApi();
-            pages = jmgur.GALLERY.getGallery(dto);
+            pages = ImgurRequest.GALLERY.getGallery(dto);
             endOfPages.set(false);
         });
     }
@@ -139,6 +152,7 @@ public class GalleryManager {
     public CompletableFuture<Void> loadSelfFavorites(FavoriteSort sort) {
         onReady = ApiData.api.thenRunAsync(() -> {
             gallery.clear();
+            seen.clear();
             sync();
             jmgur = ApiData.getApi();
             pages = jmgur.ACCOUNT.getSelfGalleryFavorites(sort);
@@ -150,6 +164,7 @@ public class GalleryManager {
     public CompletableFuture<Void> loadSelfAccount() {
         onReady = ApiData.api.thenRunAsync(() -> {
             gallery.clear();
+            seen.clear();
             sync();
             jmgur = ApiData.getApi();
             pages = jmgur.ACCOUNT.getUserSubmissions();
@@ -175,6 +190,7 @@ public class GalleryManager {
             GalleryImage image = (GalleryImage)element;
             ArrayList<GalleryImage> images = new ArrayList<>();
             images.add(image);
+
             return images;
         }
 

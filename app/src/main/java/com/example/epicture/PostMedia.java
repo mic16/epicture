@@ -21,10 +21,14 @@ import android.widget.ImageView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
+import net.azzerial.jmgur.api.entities.dto.GalleryShareDTO;
 import net.azzerial.jmgur.api.entities.dto.ImageUploadDTO;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Base64;
+
+import fr.shiranuit.ImgurRequest.AlbumDTO;
+import fr.shiranuit.ImgurRequest.ImgurRequest;
 
 public class PostMedia extends AppCompatActivity {
 
@@ -99,10 +103,17 @@ public class PostMedia extends AppCompatActivity {
                     .base64(base64)
                     .setTitle(title);
         }
-        ApiData.getApi().IMAGE.uploadImage(image).queue(
-                System.out::println,
-                Throwable::printStackTrace
-        );
+        final AlbumDTO album = new AlbumDTO();
+        ApiData.getApi().IMAGE.uploadImage(image).queue(img -> {
+                album.addImageHash(img.getHash());
+                album.setTitle(title);
+                album.setDescription(description);
+
+                String hash = ImgurRequest.ALBUM.createAlbum(album).complete();
+                GalleryShareDTO dto = GalleryShareDTO.create();
+                dto.setTitle(title);
+                ApiData.getApi().GALLERY.shareAlbum(hash, dto).queue();
+            });
     }
 
     @Override
