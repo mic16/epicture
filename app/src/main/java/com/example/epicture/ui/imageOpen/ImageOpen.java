@@ -69,6 +69,12 @@ public class ImageOpen extends AppCompatActivity {
 
         pageNb = (TextView)findViewById(R.id.pageOnPage);
         pageNb.setText((count + 1) + "/" + image.getListImage().size());
+        
+        TextView author = (TextView)findViewById(R.id.authorName);
+        author.setText(image.getAuthor());
+
+        TextView creationDate = (TextView)findViewById(R.id.creationDate);
+        creationDate.setText(image.getCreationDate());
     }
 
     public void favImage(View view) {

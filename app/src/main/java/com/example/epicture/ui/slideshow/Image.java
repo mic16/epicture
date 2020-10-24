@@ -11,13 +11,17 @@ import net.azzerial.jmgur.api.entities.GalleryElement;
 import net.azzerial.jmgur.api.entities.GalleryImage;
 
 import java.io.Serializable;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Image implements Serializable {
-    private String title, imageUrl, hash, description, favoriteHash;
+    private String title, imageUrl, hash, description, favoriteHash, author;
     private int upVote, downVote, like, nbView;
     private boolean isAlbum;
+    private OffsetDateTime creationDate;
 
     private List<Image> listImage = new ArrayList<>();
 
@@ -42,6 +46,8 @@ public class Image implements Serializable {
         this.upVote = img.getUps();
         this.downVote = img.getDowns();
         this.like = img.getFavoriteCount();
+        this.author = img.getAuthorName();
+        this.creationDate = img.getCreationDate();
         System.out.println("size : " + list.size());
         for (int i = 0; i < list.size(); i++) {
             listImage.add(new Image(list.get(i)));
@@ -57,8 +63,10 @@ public class Image implements Serializable {
         this.upVote = img.getUps();
         this.downVote = img.getDowns();
         this.like = img.getFavoriteCount();
+        this.author = img.getAuthorName();
+        this.creationDate = img.getCreationDate();
     }
-
+    
     static public String format(int nb) {
         String res = Integer.toString(nb);
         if (res.length() > 3) {
@@ -154,4 +162,15 @@ public class Image implements Serializable {
     public void setNbView(int nbView) {
         this.nbView = nbView;
     }
+
+    public String getAuthor() { return author; };
+
+    public void setAuthor(String author) { this.author = author; };
+
+    public String getCreationDate() {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return fmt.format(creationDate);
+    };
+
+    public void setCreationDate(OffsetDateTime creationDate) { this.creationDate = creationDate; };
 }
