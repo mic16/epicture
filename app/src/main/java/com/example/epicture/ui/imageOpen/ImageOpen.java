@@ -3,6 +3,7 @@ package com.example.epicture.ui.imageOpen;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,6 +52,7 @@ public class ImageOpen extends AppCompatActivity {
         title.setText(image.getTitle());
 
         TextView description = (TextView)findViewById(R.id.descriptionFullScreen);
+        description.setMovementMethod(new ScrollingMovementMethod());
         description.setText(image.getDescription());
 
         TextView vu = (TextView)findViewById(R.id.nbViewFullScreen);
