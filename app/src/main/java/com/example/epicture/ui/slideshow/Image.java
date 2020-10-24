@@ -9,6 +9,7 @@ import com.example.epicture.GalleryManager;
 import net.azzerial.jmgur.api.entities.GalleryAlbum;
 import net.azzerial.jmgur.api.entities.GalleryElement;
 import net.azzerial.jmgur.api.entities.GalleryImage;
+import net.azzerial.jmgur.api.entities.subentities.Vote;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
@@ -16,6 +17,8 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.shiranuit.ImgurRequest.ImgurRequest;
 
 public class Image implements Serializable {
     private String title, imageUrl, hash, description, favoriteHash, author;
