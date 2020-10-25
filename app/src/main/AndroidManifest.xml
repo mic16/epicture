@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PostComments"></activity>
+        <activity android:name=".PostComments"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".BlockedUsersItem" />
         <activity android:name=".ui.imageOpen.ImageOpen"
             android:theme="@style/AppTheme.NoActionBar" />

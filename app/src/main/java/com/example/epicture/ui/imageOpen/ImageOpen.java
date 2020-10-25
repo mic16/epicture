@@ -2,6 +2,7 @@ package com.example.epicture.ui.imageOpen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.epicture.ApiData;
 import com.example.epicture.GalleryManager;
+import com.example.epicture.PostComments;
 import com.example.epicture.R;
 import com.example.epicture.ui.slideshow.Image;
 
@@ -175,5 +177,11 @@ public class ImageOpen extends AppCompatActivity {
                     .into(userPictureView);
         }
         pageNb.setText((count + 1) + "/" + image.getListImage().size());
+    }
+
+    public void comment(View view) {
+        Intent i = new Intent(this, PostComments.class);
+        i.putExtra("hash", image.getFavoriteHash());
+        startActivity(i);
     }
 }
