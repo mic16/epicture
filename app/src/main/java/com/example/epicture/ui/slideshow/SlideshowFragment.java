@@ -20,6 +20,11 @@ import android.widget.Switch;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
 
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;

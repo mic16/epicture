@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".ui.imageOpen.ImageOpen">
 
     <ImageView
         android:id="@+id/imageViewFullScreen"
         android:layout_width="0dp"
-        android:layout_height="500dp"
+        android:layout_height="400dp"
         android:contentDescription="@string/imgfullscreen"
-        app:layout_constraintEnd_toStartOf="@+id/nbDownFullscreen"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:srcCompat="@drawable/ic_launcher_background" />
@@ -26,10 +29,51 @@
         android:background="@drawable/rectangle_drawable_back"
         android:gravity="center"
         android:padding="10dp"
+        android:textColor="@color/text"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/text"
+        app:layout_constraintBottom_toBottomOf="@+id/titleFullScreen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleFullScreen" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/text"
+        app:layout_constraintBottom_toTopOf="@+id/imageView6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewFullScreen" />
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/text"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewFullScreen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/creationDate" />
+
+    <View
+        android:id="@+id/view6"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/text"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionFullScreen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nbViewFullScreen" />
 
     <TextView
         android:id="@+id/descriptionFullScreen"
@@ -42,10 +86,11 @@
         android:background="@drawable/rectangle_drawable_back"
         android:padding="10dp"
         android:scrollbars="vertical"
+        android:textColor="@color/text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nbViewFullScreen" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
     <ImageView
@@ -64,10 +109,10 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:paddingStart="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/descriptionFullScreen"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nbUpFullscreen"
         app:srcCompat="@drawable/ic_baseline_visibility_24"
-        app:tint="#2443DA"/>
+        app:tint="#2443DA" />
 
     <TextView
         android:id="@+id/nbLikeFullScreen"
@@ -75,6 +120,7 @@
         android:layout_height="40dp"
         android:paddingStart="5dp"
         android:text="@string/_0"
+        android:textColor="@color/text"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/likeFullScreen" />
@@ -85,85 +131,78 @@
         android:layout_height="40dp"
         android:paddingStart="5dp"
         android:text="@string/_0"
+        android:textColor="@color/text"
         android:textSize="30sp"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewFullScreen" />
+        app:layout_constraintTop_toBottomOf="@+id/nbUpFullscreen" />
 
     <ImageView
         android:id="@+id/downVoteDisplay"
         android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:clickable="true"
+        android:layout_height="40dp"
         android:onClick="downImage"
-        android:paddingRight="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nbUpFullscreen"
+        app:layout_constraintStart_toEndOf="@+id/nbUpFullscreen"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewFullScreen"
         app:srcCompat="@drawable/ic_baseline_arrow_downward_24"
-        app:tint="@color/year" />
+        app:tint="@android:color/darker_gray" />
 
     <ImageView
         android:id="@+id/upVoteDisplay"
         android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:clickable="true"
+        android:layout_height="40dp"
         android:onClick="upImage"
-        android:paddingRight="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleFullScreen"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewFullScreen"
         app:srcCompat="@drawable/ic_baseline_arrow_upward_24"
-        app:tint="@color/year" />
+        app:tint="@android:color/darker_gray" />
 
     <TextView
 
-        android:background="@drawable/rectangle_drawable_back"
         android:id="@+id/nbUpFullscreen"
         android:layout_width="80dp"
         android:layout_height="40dp"
+        android:background="@color/background"
         android:gravity="center"
-        android:paddingRight="10dp"
         android:text="@string/_0"
+        android:textColor="@color/text"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/upVoteDisplay" />
 
     <TextView
 
-        android:background="@drawable/rectangle_drawable_back"
         android:id="@+id/nbDownFullscreen"
         android:layout_width="80dp"
         android:layout_height="40dp"
+        android:background="@drawable/rectangle_drawable_back"
         android:gravity="center"
-        android:paddingRight="10dp"
         android:text="@string/_0"
+        android:textColor="@color/text"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nbUpFullscreen"
         app:layout_constraintTop_toBottomOf="@+id/downVoteDisplay" />
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:clickable="true"
         android:onClick="backFullScreen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageViewFullScreen"
-        app:layout_constraintTop_toBottomOf="@+id/nbDownFullscreen"
-        app:tint="#2443DA"
-        app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+        app:layout_constraintStart_toEndOf="@+id/downVoteDisplay"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewFullScreen"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24"
+        app:tint="#2443DA" />
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:clickable="true"
         android:onClick="nextFullScreen"
-        android:paddingBottom="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageViewFullScreen"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        app:tint="#2443DA"
-        app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
+        app:layout_constraintStart_toEndOf="@+id/imageView6"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewFullScreen"
+        app:srcCompat="@drawable/ic_baseline_arrow_forward_24"
+        app:tint="#2443DA" />
 
     <TextView
 
@@ -173,9 +212,11 @@
         android:background="@drawable/rectangle_drawable_back"
         android:gravity="center"
         android:text="1/1"
+        android:textColor="@color/text"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView7"
         app:layout_constraintStart_toEndOf="@+id/imageViewFullScreen"
+        app:layout_constraintStart_toStartOf="@+id/imageView6"
         app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
     <TextView
@@ -186,6 +227,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:text="Posted by "
+        android:textColor="@color/text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleFullScreen" />
 
@@ -195,6 +237,7 @@
         android:layout_height="0dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
+        android:textColor="@color/text"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/imageViewFullScreen"
         app:layout_constraintStart_toEndOf="@+id/textView2"
@@ -207,18 +250,31 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:text=" the "
+        android:textColor="@color/text"
         app:layout_constraintBottom_toTopOf="@+id/imageViewFullScreen"
         app:layout_constraintStart_toEndOf="@+id/authorName"
         app:layout_constraintTop_toBottomOf="@+id/titleFullScreen" />
 
     <TextView
         android:id="@+id/creationDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
+        android:textColor="@color/text"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/imageViewFullScreen"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/titleFullScreen" />
+
+    <ImageView
+        android:id="@+id/comments"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:paddingTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewFullScreen"
+        app:srcCompat="@android:drawable/stat_notify_chat"
+        app:tint="#2443DA" />
 </androidx.constraintlayout.widget.ConstraintLayout>
