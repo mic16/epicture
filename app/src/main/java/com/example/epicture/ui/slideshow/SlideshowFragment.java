@@ -75,8 +75,10 @@ public class SlideshowFragment extends Fragment {
         mediaSearchInput.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    String s =  mediaSearchInput.getEditText().getText().toString();
+                    s = s.replace("\n", "");
+                    mediaSearchInput.getEditText().setText(s);
                     selectMedia.performClick();
-                    mediaSearchInput.getEditText().setText("");
                 }
                 return false;
             }
@@ -122,28 +124,33 @@ public class SlideshowFragment extends Fragment {
 
     private void searchMedia() {
         GalleryDTO gallery = GalleryDTO.create();
+        GallerySearchDTO searchDto = GallerySearchDTO.create();
 
         switch (sortSpinner.getSelectedItemPosition()) {
             case 0:
                 gallery.setSort(GallerySort.VIRAL);
+                searchDto.setSort(GallerySort.VIRAL);
                 break;
             case 1:
                 gallery.setSort(GallerySort.TOP);
+                searchDto.setSort(GallerySort.TOP);
                 break;
             case 2:
                 gallery.setSort(GallerySort.TIME);
+                searchDto.setSort(GallerySort.TIME);
                 break;
             case 3:
                 gallery.setSort(GallerySort.RISING);
                 break;
         }
         gallery.showNSFW(nsfwSwitch.isEnabled());
-        mAdapter.manager.updateDTO(gallery);
         String query = mediaSearchInput.getEditText().getText().toString();
         if (query.isEmpty()) {
+            mAdapter.manager.updateDTO(gallery);
             mAdapter.manager.frontPage();
         } else {
-            mAdapter.manager.searchGallery(query);
+            searchDto.query(query);
+            mAdapter.manager.searchGallery(searchDto);
         }
     }
 

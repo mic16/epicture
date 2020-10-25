@@ -11,14 +11,17 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.epicture.ApiData;
+import com.example.epicture.GalleryManager;
 import com.example.epicture.R;
 import com.example.epicture.ui.slideshow.Image;
 
 import net.azzerial.jmgur.api.entities.GalleryAlbum;
 import net.azzerial.jmgur.api.entities.GalleryElement;
+import net.azzerial.jmgur.api.entities.GalleryImage;
 import net.azzerial.jmgur.api.entities.subentities.Vote;
 import net.azzerial.jmgur.api.requests.restaction.RestAction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.shiranuit.ImgurRequest.ImgurRequest;
@@ -42,6 +45,7 @@ public class ImageOpen extends AppCompatActivity {
         downVote = (ImageView)findViewById(R.id.downVoteDisplay);
         count = 0;
 
+        pageNb = (TextView)findViewById(R.id.pageOnPage);
         if (image.getIsFavorite()) {
             favView.setImageResource(R.drawable.ic_baseline_favorite_24);
         }
@@ -53,6 +57,15 @@ public class ImageOpen extends AppCompatActivity {
             } else if(vote == Vote.DOWN) {
                 downVote.setColorFilter(Color.RED);
             }
+
+            List<Image> list = new ArrayList<>();;
+            List<GalleryImage> imgs = GalleryManager.getImagesFrom(album);
+            for (int i = 0; i < imgs.size(); i++) {
+                list.add(new Image(imgs.get(i)));
+            }
+            image.setListImage(list);
+            System.out.println(image.getListImage().size());
+            pageNb.setText((count + 1) + "/" + image.getListImage().size());
         });
 
         ImageView userPictureView = (ImageView)findViewById(R.id.imageViewFullScreen);
@@ -79,9 +92,6 @@ public class ImageOpen extends AppCompatActivity {
 
         TextView like = (TextView)findViewById(R.id.nbLikeFullScreen);
         like.setText(image.getLike());
-
-        pageNb = (TextView)findViewById(R.id.pageOnPage);
-        pageNb.setText((count + 1) + "/" + image.getListImage().size());
         
         TextView author = (TextView)findViewById(R.id.authorName);
         author.setText(image.getAuthor());

@@ -167,10 +167,11 @@
 
     <TextView
 
-        android:background="@drawable/rectangle_drawable_back"
         android:id="@+id/pageOnPage"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_drawable_back"
+        android:gravity="center"
         android:text="1/1"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView7"

@@ -52,10 +52,6 @@ public class Image implements Serializable {
         this.like = img.getFavoriteCount();
         this.author = img.getAuthorName();
         this.creationDate = img.getCreationDate();
-        System.out.println("size : " + list.size());
-        for (int i = 0; i < list.size(); i++) {
-            listImage.add(new Image(list.get(i)));
-        }
     }
 
     public Image(GalleryImage img) {
@@ -99,7 +95,7 @@ public class Image implements Serializable {
         return listImage;
     }
 
-    public void setListImage(List<Image> title) {
+    public void setListImage(List<Image> listImage) {
         this.listImage = listImage;
     }
 

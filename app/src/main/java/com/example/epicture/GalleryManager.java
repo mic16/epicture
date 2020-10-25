@@ -128,6 +128,18 @@ public class GalleryManager {
         return nextPage();
     }
 
+    public CompletableFuture<Void> searchGallery(GallerySearchDTO dto) {
+        onReady = ApiData.api.thenRunAsync(() -> {
+            gallery.clear();
+            seen.clear();
+            sync();
+            jmgur = ApiData.getApi();
+            pages = jmgur.GALLERY.searchGallery(dto);
+            endOfPages.set(false);
+        });
+        return nextPage();
+    }
+
     public void clear() {
         gallery.clear();
         seen.clear();

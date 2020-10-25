@@ -60,6 +60,7 @@ public class PostMedia extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(
                         Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                //i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
             }
         });
