@@ -15,20 +15,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PostComments"
+        <activity android:name=".PostUserComment"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".BlockedUsersItem" />
-        <activity android:name=".ui.imageOpen.ImageOpen"
+        <activity
+            android:name=".PostComments"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".UserSettings"
+        <activity
+            android:name=".BlockedUsersItem"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".PostMedia"
+        <activity
+            android:name=".ui.imageOpen.ImageOpen"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UserSettings"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PostMedia"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".User"
             android:label="@string/title_activity_user"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ConnectActivity" />
+        <activity
+            android:name=".ConnectActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

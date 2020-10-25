@@ -27,6 +27,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     public CommentAdapter(List<UserComment> commentDataset) {
         this.commentDataset = commentDataset;
+        notifyDataSetChanged();
     }
 
     @Override
