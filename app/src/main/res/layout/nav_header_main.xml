@@ -20,6 +20,7 @@
         android:contentDescription="@string/nav_header_desc"
         android:onClick="userSettings"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@drawable/ic_baseline_face_24" />
+        android:tint="@color/text"
+        app:srcCompat="@drawable/plus" />
 
 </LinearLayout>
