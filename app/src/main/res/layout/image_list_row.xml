@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@color/background"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
@@ -12,10 +15,11 @@
     android:paddingBottom="@dimen/row_padding_vertical">
 
     <com.example.epicture.SquareLayout
+        android:id="@+id/squareLayout"
         android:layout_width="180dp"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <!--
             your layouts/views/widgets
@@ -36,7 +40,7 @@
             android:layout_below="@id/imageViewScroll"
             android:layout_alignParentBottom="true"
             android:layout_toEndOf="@+id/imageView2"
-            android:background="#2443DA"
+            android:background="@color/colorSecondary"
             android:text="@string/_0"
             android:textSize="18sp" />
 
@@ -46,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageViewScroll"
             android:layout_alignParentBottom="true"
-            android:background="#2443DA"
+            android:background="@color/colorSecondary"
             android:contentDescription="@string/viewdisign"
             app:srcCompat="@drawable/ic_baseline_visibility_24" />
 
@@ -57,14 +61,17 @@
             android:layout_below="@+id/imageViewScroll"
             android:layout_alignParentBottom="true"
             android:layout_toStartOf="@+id/textView6"
+            android:background="@color/colorSecondary"
             app:srcCompat="@drawable/ic_baseline_arrow_upward_24" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/imageViewScroll"
             android:layout_alignParentBottom="true"
             android:layout_toStartOf="@+id/imageView8"
+            android:background="@color/colorSecondary"
             android:text="/"
             android:textSize="18sp" />
 
@@ -75,6 +82,7 @@
             android:layout_below="@+id/imageViewScroll"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
+            android:background="@color/colorSecondary"
             app:srcCompat="@drawable/ic_baseline_arrow_downward_24" />
 
         <TextView
@@ -84,8 +92,19 @@
             android:layout_below="@+id/imageViewScroll"
             android:layout_alignParentBottom="true"
             android:layout_toStartOf="@+id/imageView3"
+            android:background="@color/colorSecondary"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageViewScroll"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/upDownVotes"
+            android:layout_toEndOf="@+id/viewScroll"
+            android:background="@color/colorSecondary" />
 
     </com.example.epicture.SquareLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

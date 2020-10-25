@@ -12,7 +12,8 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="0dp"
-        android:layout_toStartOf="@+id/unblock_user" />
+        android:layout_toStartOf="@+id/unblock_user"
+        android:textColor="@color/text" />
 
     <Button
         android:id="@+id/unblock_user"

@@ -70,7 +70,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
                     .load(image.getUrl())
                     .into(holder.image);
             holder.viewScroll.setText(Image.format(element.getViews()));
-            String tmp = Integer.toString(element.getUps() / element.getDowns() * 100 - 100) + "%";
+            String tmp = Integer.toString(element.getUps() - element.getDowns());
             holder.upDownVotes.setText(tmp);
         }
     }
